@@ -1,0 +1,97 @@
+commit ca9007231fe387e6a1a540720fc93891aa0153f0
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 14:18:49 2018 +0200
+
+    file1 poistettu, muuta
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 8e4067b7a9aebd132d955e469d41141f1b257901
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 14:14:26 2018 +0200
+
+    lisää tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit a105db803de2c7585932928997599b6b1a816aa7
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 14:04:15 2018 +0200
+
+    muutoksiaaa
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit ff41b473d2ed7fbbc39b61fec6ae50908725341a
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 14:02:09 2018 +0200
+
+    tiedosto muuttui ekaksi
+
+ eka.txt      | 3 +++
+ tiedosto.txt | 3 ---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit c1b853e0a99f180170c02b49e31c4daca2a7a167
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 14:00:57 2018 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 3fa03614ec96bdc6b3aad803d892aebc938b3f0a
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 13:57:54 2018 +0200
+
+    lisää muutoksia
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 94eb892dfed39931c5774186088af6c38c706a6f
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 13:56:12 2018 +0200
+
+    muutoksia
+
+ tiedosto.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit ed0c605b16d4a34b2e6733b15a45e8bb0a8366f9
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 13:48:59 2018 +0200
+
+    kolmas ja muutoksia toiseen
+
+ kolmas.txt | 4 ++++
+ toinen.txt | 1 +
+ 2 files changed, 5 insertions(+)
+
+commit 33cce7ba3175729c53f2d6f9613089627edab81a
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 13:33:25 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 8948360260d08d3cb689757f1edcb33575a883c3
+Author: Thomas Stenius <thomas.stenius@helsinki.fi>
+Date:   Thu Mar 15 13:27:56 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
