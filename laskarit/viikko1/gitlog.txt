@@ -95,3 +95,8 @@ Date:   Thu Mar 15 13:27:56 2018 +0200
 
  tiedosto.txt | 0
  1 file changed, 0 insertions(+), 0 deletions(-)
+ 
+ 
+ 
+ 
+ Muutetaan tiedostoja GitHubissa, onpas kivaa!
