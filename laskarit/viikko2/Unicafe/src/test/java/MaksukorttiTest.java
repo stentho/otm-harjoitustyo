@@ -14,27 +14,11 @@ public class MaksukorttiTest {
     public MaksukorttiTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         maksukortti = new Maksukortti(100);
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    @Test
-    public void hello() {
-    }
-    
     @Test
     public void kortinSaldoOnAlussaOikein() {
         assertEquals("saldo: 1.0", maksukortti.toString());
