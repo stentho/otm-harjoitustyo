@@ -173,7 +173,7 @@ public class KassapaateTest {
     public void kortillaEiTarpeeksiRahaaJaMyytyjenMaaraEiMuutuMaukkaasti() {
         maksukortti.otaRahaa(700);
         kassapaate.syoMaukkaasti(maksukortti);
-        assertEquals(0,kassapaate.edullisiaLounaitaMyyty());
+        assertEquals(0,kassapaate.maukkaitaLounaitaMyyty());
     }
     
     @Test
@@ -209,6 +209,13 @@ public class KassapaateTest {
         kassapaate.lataaRahaaKortille(maksukortti, 1000);
         assertEquals(2000,maksukortti.saldo());
     }
+    
+    @Test
+    public void kortilleEiVoiLadataNegatiivistaSaldoa() {
+        kassapaate.lataaRahaaKortille(maksukortti, -1);
+        assertEquals(1000,maksukortti.saldo());
+    }
+    
     
     @Test
     public void kortilleRahaaLadattaessaKassanRahamaaraKasvaaOikein() {
