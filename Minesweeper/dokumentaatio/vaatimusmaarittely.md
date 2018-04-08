@@ -44,6 +44,8 @@ Seuraavat toiminnallisuudet lisätään sovellukseen ajan myötä:
   - Miinojen määrän implementaatio itse peliin
   - Aikarajan implementaatio itse peliin (jos aika loppuu niin peli päättyy ja palataan aloitusruutuun)
 - Tulostaulukon luominen niin että sinne pääsee suoraan aloitusnäytöstä
+  - Tietokannan luominen ja integraatio (Daoilla)
+  - Tulostaulukon sisällön suodatus esim (nimen, kenttäkoon, miinamäärän ja ajan mukaan)
   - Pelin voittamisen jälkeen pitää pystyä kirjaamaan oman suorituksensa tulostaulukkoon antamalla nimellä
     - Ei pakollista, voi painaa myös peruuta, jonka seurauksena mennään takaisin aloitysnäyttöön
   - Tämän jälkeen siirryytään suoraan tulostaulukkonäyttöön
