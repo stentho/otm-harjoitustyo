@@ -1,4 +1,10 @@
-# OTM-harjoitustyö #
+# OTM-harjoitustyö - Minesweeper#
+
+Tällä sovelluksella voi pelata Minesweeperia, kiva juttu!
+
+## Dokumentaatio ##
+
+[Työaikakirjanpito](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/tuntikirjanpito.md)
 
 ## Tehtävät ##
 
@@ -7,8 +13,3 @@
 [komentorivi.txt](https://github.com/stentho/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
 [gitlog.txt](https://github.com/stentho/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-
-
-**Kiva muutos!**
-
-Toinen kiva muutos!
