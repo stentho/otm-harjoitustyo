@@ -10,7 +10,11 @@ Alkuvaiheessa ei voi valita kentän kokoa, miinojen määrää, eikä aikarajaa 
 
 ## Käyttöliittymäluonnos
 
+Sovelluksen käyttöliittymässä on neljä näkymää:
+
 <img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/MinesweeperOTM.png">
+
+Sovelluksen aloitusnäytössä määritellään kentän koko, miinojen määrä (ei voi olla suurempi kuin kentän koko) ja aikaraja. Tältä näytöltä voi siirtyä suoraan peliin tai tulostaulukkoon. Pelin päätyttyä (mikäli voittaa) on mahdollisuus tallettaa suoritus tulostaulukkoon syöttämällä nimellä.
 
 ## Perusversion tarjoama toiminnallisuus
 

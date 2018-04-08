@@ -4,7 +4,7 @@ Tällä sovelluksella voi pelata Minesweeperia, kiva juttu!
 
 ## Dokumentaatio
 
-
+[Vaatimusmäärittely](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/vaatimusmaarittely.md)
 
 [Työaikakirjanpito](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/tuntikirjanpito.md)
 
