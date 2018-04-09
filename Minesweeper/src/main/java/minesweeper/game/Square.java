@@ -3,8 +3,7 @@ package minesweeper.game;
 
 
 public class Square {
-    int x;
-    int y;
+    int x,y;
     boolean bomb;
 
     public Square(int x, int y, boolean bomb) {
