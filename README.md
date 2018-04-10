@@ -1,4 +1,4 @@
-# OTM-harjoitustyö - Minesweeper
+Minesweeper
 
 Tällä sovelluksella pelataan Minesweeperia!
 
