@@ -1,4 +1,4 @@
-Minesweeper
+# Minesweeper
 
 Tällä sovelluksella pelataan Minesweeperia!
 
