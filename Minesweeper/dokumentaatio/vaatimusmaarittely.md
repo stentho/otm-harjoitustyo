@@ -9,7 +9,7 @@ Sovelluksella pelataan suosittua miinaharavointipeliä. Sovelluksessa on tarkoit
 
 Sovelluksen käyttöliittymässä on neljä näkymää:
 
-<img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/MinesweeperOTM.png">
+<img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/kuvat/MinesweeperOTM.png">
 
 Sovelluksen aloitusnäytössä määritellään kentän koko, miinojen määrä (ei voi olla suurempi kuin kentän koko) ja aikaraja. Tältä näytöltä voi siirtyä suoraan peliin tai tulostaulukkoon. Pelin päätyttyä (mikäli voittaa) on mahdollisuus tallettaa suoritus tulostaulukkoon syöttämällä nimellä.
 

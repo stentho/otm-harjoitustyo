@@ -1,17 +1,31 @@
 # OTM-harjoitustyö - Minesweeper
 
-Tällä sovelluksella voi pelata Minesweeperia, kiva juttu!
+Tällä sovelluksella pelataan Minesweeperia!
 
 ## Dokumentaatio
 
+[Käyttöohje](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/kayttoohje.md)
+
 [Vaatimusmäärittely](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/vaatimusmaarittely.md)
+
+[Arkkitehtuurikuvaus](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/arkkitehtuurikuvaus.md)
+
+[Testausdokumentti](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/testausdokumentti.md)
 
 [Työaikakirjanpito](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/tuntikirjanpito.md)
 
-## Tehtävät
+## Komentorivitoiminnot
 
-### Viikko 1
+### Testausdokumentti
 
-[komentorivi.txt](https://github.com/stentho/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+Sovellusta voi testata seuraavalla komennolla:
 
-[gitlog.txt](https://github.com/stentho/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+```
+mvn test
+```
+
+Testikattavuusraportin saa luotuo komennolla
+
+```
+mvn jacoco:report
+```
