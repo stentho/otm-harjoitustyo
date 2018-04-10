@@ -24,7 +24,7 @@ Sovellusta voi testata seuraavalla komennolla:
 mvn test
 ```
 
-Testikattavuusraportin saa luotuo komennolla
+Testikattavuusraportin voi luoda komennolla
 
 ```
 mvn jacoco:report
