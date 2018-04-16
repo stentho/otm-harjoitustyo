@@ -66,6 +66,30 @@ public class MinesweeperUi extends Application {
                 //ei ole itse pommi, niin kirjoitetaan numero ruutuun.
                 if (b > 0 && !squarePane.getSquare().isBomb()) {
                     squarePane.setText(Integer.toString(b));
+                    if (b == 1) {
+                        squarePane.getText().setFill(Color.web("0x0000ff"));
+                    }
+                    if (b == 2) {
+                        squarePane.getText().setFill(Color.web("0x007b00"));
+                    }
+                    if (b == 3) {
+                        squarePane.getText().setFill(Color.web("0xff0000"));
+                    }
+                    if (b == 4) {
+                        squarePane.getText().setFill(Color.web("0x010080"));
+                    }
+                    if (b == 5) {
+                        squarePane.getText().setFill(Color.web("0x810102"));
+                    }
+                    if (b == 6) {
+                        squarePane.getText().setFill(Color.web("0x008081"));
+                    }
+                    if (b == 7) {
+                        squarePane.getText().setFill(Color.web("0x000000"));
+                    }
+                    if (b == 8) {
+                        squarePane.getText().setFill(Color.web("0x808080"));
+                    }
                 }
                 gridPane.getChildren().add(squarePane);
             }

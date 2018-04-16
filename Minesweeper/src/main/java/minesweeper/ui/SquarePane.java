@@ -44,16 +44,17 @@ public class SquarePane extends StackPane {
         tile = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
         tile.setFill(Color.web("0xcccccc"));
         tile.setStroke(Color.web("0x828282"));
+        tile.setStrokeWidth(2);
 
         edge = new Rectangle(SQUARE_SIZE - 4, SQUARE_SIZE - 4);
         edge.setFill(Color.web("0xcccccc"));
         edge.setStrokeWidth(4);
         edge.setStroke(Color.web("0xf2f2f2"));
 
-        text.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+        text.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
         
         if (square.isBomb()) {
-            text.setText("X");
+            text.setText("\u23FA");
         } else {
             text.setText("");
         }
@@ -116,7 +117,7 @@ public class SquarePane extends StackPane {
     }
 
     public void setOpen(boolean bool) {
-        isOpen = bool;
+        square.setIsOpen(bool);
     }
 
     public void setText(String text) {
