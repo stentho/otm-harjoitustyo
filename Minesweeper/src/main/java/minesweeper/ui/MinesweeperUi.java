@@ -1,20 +1,25 @@
 package minesweeper.ui;
 
+import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import minesweeper.game.MinesweeperGame;
@@ -25,7 +30,7 @@ public class MinesweeperUi extends Application {
     MinesweeperGame game;
     final static int SQUARE_SIZE = 40;
     Scene scene;
-    Pane mainMenu;
+    BorderPane mainMenu;
     Pane gridPane;
     int squaresX;
     int squaresY;
@@ -66,35 +71,40 @@ public class MinesweeperUi extends Application {
                 //ei ole itse pommi, niin kirjoitetaan numero ruutuun.
                 if (b > 0 && !squarePane.getSquare().isBomb()) {
                     squarePane.setText(Integer.toString(b));
-                    if (b == 1) {
-                        squarePane.getText().setFill(Color.web("0x0000ff"));
-                    }
-                    if (b == 2) {
-                        squarePane.getText().setFill(Color.web("0x007b00"));
-                    }
-                    if (b == 3) {
-                        squarePane.getText().setFill(Color.web("0xff0000"));
-                    }
-                    if (b == 4) {
-                        squarePane.getText().setFill(Color.web("0x010080"));
-                    }
-                    if (b == 5) {
-                        squarePane.getText().setFill(Color.web("0x810102"));
-                    }
-                    if (b == 6) {
-                        squarePane.getText().setFill(Color.web("0x008081"));
-                    }
-                    if (b == 7) {
-                        squarePane.getText().setFill(Color.web("0x000000"));
-                    }
-                    if (b == 8) {
-                        squarePane.getText().setFill(Color.web("0x808080"));
-                    }
+                    setSquareTextColor(squarePane, b);
                 }
                 gridPane.getChildren().add(squarePane);
             }
         }
         return gridPane;
+    }
+
+    // tässä asetetaan numeroille omat värit, niin että ne erottuvat toisistaan.
+    private static void setSquareTextColor(SquarePane squarePane, int b) {
+        if (b == 1) {
+            squarePane.getText().setFill(Color.web("0x0000ff"));
+        }
+        if (b == 2) {
+            squarePane.getText().setFill(Color.web("0x007b00"));
+        }
+        if (b == 3) {
+            squarePane.getText().setFill(Color.web("0xff0000"));
+        }
+        if (b == 4) {
+            squarePane.getText().setFill(Color.web("0x010080"));
+        }
+        if (b == 5) {
+            squarePane.getText().setFill(Color.web("0x810102"));
+        }
+        if (b == 6) {
+            squarePane.getText().setFill(Color.web("0x008081"));
+        }
+        if (b == 7) {
+            squarePane.getText().setFill(Color.web("0x000000"));
+        }
+        if (b == 8) {
+            squarePane.getText().setFill(Color.web("0x808080"));
+        }
     }
 
     public void leftClick(SquarePane sqPane) {
@@ -125,17 +135,17 @@ public class MinesweeperUi extends Application {
     }
 
     private void rightClick(SquarePane sqPane) {
-        
+
         // Jos ruutua on jo auki, ei tehdä mitään.
         if (sqPane.isOpen()) {
             return;
         }
-        
+
         if (sqPane.getFlag().isVisible()) {
             sqPane.showFlag(false);
             return;
         }
-        
+
         if (!sqPane.getFlag().isVisible()) {
             sqPane.showFlag(true);
         }
@@ -175,13 +185,28 @@ public class MinesweeperUi extends Application {
             scene.setRoot(createGrid());
         });
 
-        mainMenu = new StackPane();
-        mainMenu.getChildren().add(playButton);
+        Text title = new Text("Minesweeper");
+        title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
+        TextField size = new TextField();
+        size.setMaxWidth(80);
+        TextField mines = new TextField();
+        mines.setMaxWidth(80);
+        TextField time = new TextField();
+        time.setMaxWidth(80);
 
-//        BorderPane border = new BorderPane();
-//        HBox hbox = new HBox(800);
-//        border.setLeft(hbox);
-//        border.setCenter(mainMenu);
+        mainMenu = new BorderPane();
+        
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(100));
+        
+        vbox.setMargin(title, new Insets(0, 0, 100, 0));
+        vbox.setMargin(size, new Insets(0, 0, 20, 0));
+        vbox.setMargin(mines, new Insets(0, 0, 20, 0));
+        vbox.setMargin(time, new Insets(0, 0, 20, 0));
+        
+        vbox.getChildren().addAll(Arrays.asList(title, size, mines, time, playButton));
+        mainMenu.setCenter(vbox);
+
         scene = new Scene(mainMenu, SQUARE_SIZE * 20, SQUARE_SIZE * 20);
 
         //aloitusnäytön setup
@@ -193,5 +218,4 @@ public class MinesweeperUi extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }
