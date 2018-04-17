@@ -9,8 +9,9 @@ public class MinesweeperGame {
     private Square[][] field;
     int squaresX;
     int squaresY;
+    double mineFreq;
 
-    public MinesweeperGame(int x, int y) {
+    public MinesweeperGame(int x, int y, double mF) {
         if (x >= 0) {
             squaresX = x;
         } else {
@@ -21,6 +22,14 @@ public class MinesweeperGame {
             squaresY = y;
         } else {
             squaresY = 0;
+        }
+        
+        if (mF > 1) {
+            mineFreq = 1;
+        } else if (mF < 0.1) {
+            mineFreq = 0.1;
+        } else {
+            mineFreq = mF;
         }
     }
 
@@ -39,7 +48,7 @@ public class MinesweeperGame {
         field = new Square[squaresX][squaresY];
         for (int y = 0; y < squaresY; y++) {
             for (int x = 0; x < squaresX; x++) {
-                Square square = new Square(x, y, Math.random() < 0.2);
+                Square square = new Square(x, y, Math.random() < mineFreq);
                 field[x][y] = square;
             }
         }

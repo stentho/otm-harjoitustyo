@@ -4,15 +4,18 @@ import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -109,6 +112,10 @@ public class MinesweeperUi extends Application {
 
     public void leftClick(SquarePane sqPane) {
 
+        if (sqPane.getFlag().isVisible()) {
+            sqPane.showFlag(false);
+        }
+
         // Jos ruutua on jo klikattu, ei tehdä mitään.
         if (sqPane.isOpen()) {
             return;
@@ -141,6 +148,7 @@ public class MinesweeperUi extends Application {
             return;
         }
 
+        // Jos 
         if (sqPane.getFlag().isVisible()) {
             sqPane.showFlag(false);
             return;
@@ -167,52 +175,85 @@ public class MinesweeperUi extends Application {
         }
     }
 
+    private static HBox createSizeHBox(TextField sizeX, TextField sizeY) {
+        sizeX.setMaxWidth(40);
+        sizeY.setMaxWidth(40);
+        Label labelS = new Label("Kentän koko:");
+        Label labelX = new Label(" x ");
+        HBox hbS = new HBox();
+        hbS.getChildren().addAll(labelS, sizeX, labelX, sizeY);
+        hbS.setSpacing(10);
+        return hbS;
+    }
+    
+    private static HBox createMinesHBox(TextField mines) {
+        mines.setMaxWidth(40);
+        Label labelM = new Label("Miinoja (%):");
+        HBox hbM = new HBox();
+        hbM.getChildren().addAll(labelM, mines);
+        hbM.setSpacing(10);
+        return hbM;
+    }
+    
+    private static HBox createTimeHBox(TextField time) {
+        time.setMaxWidth(40);
+        Label labelT = new Label("Aikaraja:");
+        HBox hbT = new HBox();
+        hbT.getChildren().addAll(labelT, time);
+        hbT.setSpacing(10);
+        return hbT;
+    }
+
     @Override
-    public void start(Stage start) throws Exception {
+    public void start(Stage stage) throws Exception {
 
         //aloitusnäyttö
+        Text title = new Text("Minesweeper");
+        title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
+        
+        TextField sizeX = new TextField("20");
+        TextField sizeY = new TextField("20");
+        TextField mines = new TextField("0.2");
+        TextField time = new TextField();
+
+        HBox hbS = createSizeHBox(sizeX, sizeY);
+        HBox hbM = createMinesHBox(mines);
+        HBox hbT = createTimeHBox(time);
+
         Button playButton = new Button();
         playButton.setText("Pelaa!");
         playButton.setFont(Font.font(25));
         playButton.setOnAction(e -> {
 
             //kun klikkaa play-nappulaa, luo pelinäytön
-            squaresX = 20;
-            squaresY = 20;
-            game = new MinesweeperGame(squaresX, squaresY);
-//            start.setWidth(SQUARE_SIZE * squaresX);
-//            start.setHeight(SQUARE_SIZE * squaresY);
+            squaresX = Integer.parseInt(sizeX.getText());
+            squaresY = Integer.parseInt(sizeY.getText());
+            game = new MinesweeperGame(squaresX, squaresY, Double.parseDouble(mines.getText()));
+            stage.setWidth(SQUARE_SIZE * squaresX);
+            stage.setHeight(SQUARE_SIZE * squaresY);
             scene.setRoot(createGrid());
         });
 
-        Text title = new Text("Minesweeper");
-        title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
-        TextField size = new TextField();
-        size.setMaxWidth(80);
-        TextField mines = new TextField();
-        mines.setMaxWidth(80);
-        TextField time = new TextField();
-        time.setMaxWidth(80);
-
         mainMenu = new BorderPane();
-        
-        VBox vbox = new VBox();
-        vbox.setPadding(new Insets(100));
-        
-        vbox.setMargin(title, new Insets(0, 0, 100, 0));
-        vbox.setMargin(size, new Insets(0, 0, 20, 0));
-        vbox.setMargin(mines, new Insets(0, 0, 20, 0));
-        vbox.setMargin(time, new Insets(0, 0, 20, 0));
-        
-        vbox.getChildren().addAll(Arrays.asList(title, size, mines, time, playButton));
-        mainMenu.setCenter(vbox);
 
-        scene = new Scene(mainMenu, SQUARE_SIZE * 20, SQUARE_SIZE * 20);
+        VBox centerVbox = new VBox();
+        centerVbox.setPadding(new Insets(100));
+
+        centerVbox.setMargin(title, new Insets(0, 0, 70, 0));
+        centerVbox.setMargin(hbS, new Insets(0, 0, 20, 0));
+        centerVbox.setMargin(hbM, new Insets(0, 0, 20, 0));
+        centerVbox.setMargin(hbT, new Insets(0, 0, 70, 0));
+
+        centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT, playButton));
+
+        mainMenu.setCenter(centerVbox);
+
+        scene = new Scene(mainMenu, 800, 600);
 
         //aloitusnäytön setup
-        start.setTitle("Minesweeper");
-        start.setScene(scene);
-        start.show();
+        stage.setTitle("Minesweeper");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {

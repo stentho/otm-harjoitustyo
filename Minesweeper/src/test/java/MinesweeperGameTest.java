@@ -31,7 +31,7 @@ public class MinesweeperGameTest {
     
     @Test
     public void eiLuoNegatiivisenKokoistaPeliä() {
-        MinesweeperGame game = new MinesweeperGame(-8, 10);
+        MinesweeperGame game = new MinesweeperGame(-8, 10, 0.2);
         assertEquals(game.getSquaresX(), 0);
     }
 }
