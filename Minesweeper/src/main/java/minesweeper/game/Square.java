@@ -13,8 +13,18 @@ public class Square {
     private int adjacentBombs;
 
     public Square(int x, int y, boolean bomb) {
-        this.x = x;
-        this.y = y;
+        if (x >= 0) {
+            this.x = x;
+        } else {
+            this.x = 0;
+        }
+        
+        if (y >= 0) {
+            this.y = y;
+        } else {
+            this.y = 0;
+        }
+        
         this.bomb = bomb;
     }
 

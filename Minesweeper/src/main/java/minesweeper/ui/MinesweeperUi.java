@@ -34,14 +34,14 @@ import minesweeper.game.Square;
 
 public class MinesweeperUi extends Application {
 
-    MinesweeperGame game;
-    final static int SQUARE_SIZE = 40;
-    Stage stage;
-    Scene scene;
-    BorderPane mainMenu;
-    Pane gridPane;
-    int squaresX;
-    int squaresY;
+    private MinesweeperGame game;
+    private final static int SQUARE_SIZE = 40;
+    private Stage stage;
+    private Scene scene;
+    private BorderPane mainMenu;
+    private Pane gridPane;
+    private int squaresX;
+    private int squaresY;
 
     // tässä luodaan ruudukko
     public Pane createGrid() {
@@ -201,7 +201,7 @@ public class MinesweeperUi extends Application {
 
     // Luodaan "Miinoja"-elementti päävalikkoon.
     private static HBox createMinesHBox(TextField mines) {
-        mines.setMaxWidth(40);
+        mines.setMaxWidth(50);
         Label labelM = new Label("Miinoja:");
         Label labelP = new Label("%");
         HBox hbM = new HBox();

@@ -41,6 +41,14 @@ public class MinesweeperGame {
         return squaresY;
     }
 
+    public double getMineFreq() {
+        return mineFreq;
+    }
+
+    public Square[][] getField() {
+        return field;
+    }
+
     // luodaan pelin kenttä luomalla array täynnä Square-olioita. Yksi Square on
     // yksi ruutu pelissä. Tässä on määritelty 20% todennäköisyys, että mikä
     // tahansa ruutu on pommi. Sitä varmaan muutetaan tulevaisuudessa.
