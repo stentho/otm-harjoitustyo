@@ -4,12 +4,8 @@ import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,13 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import minesweeper.game.MinesweeperGame;
@@ -45,6 +39,7 @@ public class MinesweeperUi extends Application {
 
     // tässä luodaan ruudukko
     public Pane createGrid() {
+        System.out.println(game);
         gridPane = new Pane();
         gridPane.setPrefSize(SQUARE_SIZE * squaresX, SQUARE_SIZE * squaresY);
 
@@ -171,6 +166,7 @@ public class MinesweeperUi extends Application {
         }
     }
 
+    // Paljastetaan kaikki pommiruudut.
     public void revealAllBombs() {
         for (int i = 0; i < (squaresX * squaresY); i++) {
             Node n = gridPane.getChildren().get(i);
@@ -247,10 +243,7 @@ public class MinesweeperUi extends Application {
             squaresY = Integer.parseInt(sizeY.getText());
             game = new MinesweeperGame(squaresX, squaresY, 0.01 * Double.parseDouble(mines.getText()));
 
-            // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +2 ja + 26
-            // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin.
-            stage.setWidth(SQUARE_SIZE * squaresX + 80 + 2);
-            stage.setHeight(SQUARE_SIZE * squaresY + 80 + 26);
+            resetScreenSize(SQUARE_SIZE * squaresX + 80, SQUARE_SIZE * squaresY + 80);
 
             BorderPane border = createGameBorder();
 
@@ -280,27 +273,33 @@ public class MinesweeperUi extends Application {
         stage.show();
     }
 
+    // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +16 ja +39
+    // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin.
+    // Ne lasketaan stagen leveyteen ja korkeuteen.
     public void resetScreenSize(int width, int height) {
-        stage.setWidth(width + 2);
-        stage.setHeight(height + 24 + 2);
+        stage.setWidth(width + 16);
+        stage.setHeight(height + 39);
     }
 
-    public void addStageSizeListeners() {
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
+    // Testaukseen tarkoitettu metodi. Tämä tulostaa ikkunan leveyden ja korkeuden, 
+    // aina kun jompikumpi muuttuu.
+//    public void addStageSizeListeners() {
+//        scene.widthProperty().addListener(new ChangeListener<Number>() {
+//
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                System.out.println("Width: " + newSceneWidth);
+//            }
+//        });
+//        scene.heightProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+//                System.out.println("Height: " + newSceneHeight);
+//            }
+//        });
+//    }
 
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                System.out.println("Width: " + newSceneWidth);
-            }
-        });
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                System.out.println("Height: " + newSceneHeight);
-            }
-        });
-    }
-
+    // Luodaan pelinäkymän reunat
     public BorderPane createGameBorder() {
         BorderPane border = new BorderPane();
         border.setCenter(createGrid());

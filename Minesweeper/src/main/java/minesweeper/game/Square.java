@@ -44,7 +44,7 @@ public class Square {
         return adjacentBombs;
     }
 
-    public boolean IsOpen() {
+    public boolean isOpen() {
         return isOpen;
     }
 

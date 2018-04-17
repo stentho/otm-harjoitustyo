@@ -49,6 +49,27 @@ public class MinesweeperGame {
         return field;
     }
 
+    public void setSquaresX(int squaresX) {
+        this.squaresX = squaresX;
+    }
+
+    public void setSquaresY(int squaresY) {
+        this.squaresY = squaresY;
+    }
+
+    public void setMineFreq(double mineFreq) {
+        this.mineFreq = mineFreq;
+    }
+
+    public void setField(Square[][] field) {
+        this.field = field;
+    }
+
+    @Override
+    public String toString() {
+        return "Minesweeper (leveys " + squaresX + ", korkeus " + squaresY + ", miinoja " + (int) (mineFreq * 100) + "%)";
+    }
+
     // luodaan pelin kenttä luomalla array täynnä Square-olioita. Yksi Square on
     // yksi ruutu pelissä. Tässä on määritelty 20% todennäköisyys, että mikä
     // tahansa ruutu on pommi. Sitä varmaan muutetaan tulevaisuudessa.

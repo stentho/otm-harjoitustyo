@@ -94,7 +94,7 @@ public class SquarePane extends StackPane {
     }
 
     public boolean isOpen() {
-        return square.IsOpen();
+        return square.isOpen();
     }
 
     public Text getText() {
