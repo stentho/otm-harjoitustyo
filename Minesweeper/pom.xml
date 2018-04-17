@@ -55,7 +55,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>minesweeper.ui.MineweeperUi</mainClass>
+                            <mainClass>minesweeper.ui.MinesweeperUi</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
