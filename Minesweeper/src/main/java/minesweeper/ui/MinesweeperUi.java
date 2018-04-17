@@ -36,6 +36,7 @@ public class MinesweeperUi extends Application {
 
     MinesweeperGame game;
     final static int SQUARE_SIZE = 40;
+    Stage stage;
     Scene scene;
     BorderPane mainMenu;
     Pane gridPane;
@@ -62,7 +63,7 @@ public class MinesweeperUi extends Application {
                 int b = squarePane.getSquare().getAdjacentBombs();
 
                 //mikäli vierekkäisten pommien määrä on positiivinen, ja
-                //ei ole itse pommi, niin kirjoitetaan numero ruutuun.
+                //ei ole itse pommi, niin piirretään numero ruutuun.
                 if (b > 0 && !squarePane.getSquare().isBomb()) {
                     squarePane.setText(Integer.toString(b));
                     setSquareTextColor(squarePane, b);
@@ -135,10 +136,12 @@ public class MinesweeperUi extends Application {
             revealAllBombs();
             System.out.println("Hävisit.");
             Timeline timeline = new Timeline(new KeyFrame(
-                    Duration.millis(3000),
-                    ae -> scene.setRoot(mainMenu)));
+                    Duration.millis(2500),
+                    ae -> scene.setRoot(mainMenu)),
+                    new KeyFrame(
+                            Duration.millis(2500),
+                            ae -> resetScreenSize(800, 600)));
             timeline.play();
-
             return;
         }
 
@@ -218,7 +221,8 @@ public class MinesweeperUi extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage st) throws Exception {
+        stage = st;
 
         // Luodaan päävalikon elementit.
         Text title = new Text("Minesweeper");
@@ -243,13 +247,13 @@ public class MinesweeperUi extends Application {
             squaresY = Integer.parseInt(sizeY.getText());
             game = new MinesweeperGame(squaresX, squaresY, 0.01 * Double.parseDouble(mines.getText()));
 
-            int x = SQUARE_SIZE * squaresX + 80 + 2;
-            int y = SQUARE_SIZE * squaresY + 80 + 26;
-            stage.setWidth(x);
-            stage.setHeight(y);
+            // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +2 ja + 26
+            // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin.
+            stage.setWidth(SQUARE_SIZE * squaresX + 80 + 2);
+            stage.setHeight(SQUARE_SIZE * squaresY + 80 + 26);
 
             BorderPane border = createGameBorder();
-            
+
             scene.setRoot(border);
         });
 
@@ -274,9 +278,14 @@ public class MinesweeperUi extends Application {
         stage.setTitle("Minesweeper");
         stage.setScene(scene);
         stage.show();
+    }
 
-        System.out.println(scene.getWidth());
+    public void resetScreenSize(int width, int height) {
+        stage.setWidth(width + 2);
+        stage.setHeight(height + 24 + 2);
+    }
 
+    public void addStageSizeListeners() {
         scene.widthProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -292,28 +301,24 @@ public class MinesweeperUi extends Application {
         });
     }
 
-    public void resetScreenSize() {
-
-    }
-
     public BorderPane createGameBorder() {
         BorderPane border = new BorderPane();
         border.setCenter(createGrid());
-        
+
         border.setBottom(createHBox(new Insets(20)));
         border.setTop(createHBox(new Insets(20)));
         border.setLeft(createVBox(new Insets(20)));
         border.setRight(createVBox(new Insets(20)));
-        
+
         return border;
     }
-    
+
     public HBox createHBox(Insets inset) {
         HBox hb = new HBox();
         hb.setPadding(inset);
         return hb;
     }
-    
+
     public VBox createVBox(Insets inset) {
         VBox vb = new VBox();
         vb.setPadding(inset);
