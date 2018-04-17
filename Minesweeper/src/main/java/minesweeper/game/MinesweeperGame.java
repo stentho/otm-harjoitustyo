@@ -17,13 +17,13 @@ public class MinesweeperGame {
         } else {
             squaresX = 0;
         }
-        
+
         if (y >= 0) {
             squaresY = y;
         } else {
             squaresY = 0;
         }
-        
+
         if (mF > 1) {
             mineFreq = 1;
         } else if (mF < 0.1) {
@@ -70,12 +70,13 @@ public class MinesweeperGame {
         return field;
     }
 
-    // tässä tehdään ArrayList kokonaisluvuista, millä saadaan viereisten
-    // ruutujen koordinaatit. Esim jos nykyinen ruutu on (4,5) paikassa,
-    // niin sen suoraan yläpuolella oleva ruutu on (0,-1) suhteessa tähän jne.
+    // Tämä metodi palauttaa ArrayListin parametriruudun vierekkäistä ruuduista.
     public ArrayList<Square> getAdjacentSquares(Square square) {
         ArrayList<Square> adjacentSquares = new ArrayList<>();
 
+        // tässä tehdään ArrayList kokonaisluvuista, millä saadaan viereisten
+        // ruutujen koordinaatit. Esim jos nykyinen ruutu on (4,5) paikassa,
+        // niin sen suoraan yläpuolella oleva ruutu on (0,-1) suhteessa tähän jne.
         ArrayList<Integer> constants = new ArrayList<>();
         constants.addAll(Arrays.asList(
                 -1, -1,
@@ -93,7 +94,7 @@ public class MinesweeperGame {
             i++;
             int adjacentSquareY = square.getY() + constants.get(i);
 
-            // jos ei ole pelin reunan ulkopuolella, lisätään ArrayListiin.
+            // jos ei ole pelin reunojen ulkopuolella, lisätään ArrayListiin.
             if (adjacentSquareX >= 0 && adjacentSquareX < squaresX
                     && adjacentSquareY >= 0 && adjacentSquareY < squaresY) {
                 adjacentSquares.add(field[adjacentSquareX][adjacentSquareY]);
@@ -102,7 +103,8 @@ public class MinesweeperGame {
         return adjacentSquares;
     }
 
-    // lasketaan edellisen metodin avulla kuinka monta pommia on ruudun ympärillä.
+    // lasketaan edellisen metodin avulla kuinka monta pommia on parametriruudun 
+    // ympärillä.
     public int calculateAdjacentBombs(Square square) {
         ArrayList<Square> adjacentSquares = getAdjacentSquares(square);
         int b = 0;

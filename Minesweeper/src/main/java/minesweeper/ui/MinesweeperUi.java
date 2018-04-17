@@ -5,8 +5,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import minesweeper.game.MinesweeperGame;
@@ -54,20 +58,7 @@ public class MinesweeperUi extends Application {
             for (int x = 0; x < squaresX; x++) {
 
                 SquarePane squarePane = new SquarePane(grid[x][y], SQUARE_SIZE);
-
-                squarePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                    @Override
-                    public void handle(MouseEvent event) {
-                        MouseButton btn = event.getButton();
-                        if (btn == MouseButton.PRIMARY) {
-                            leftClick(squarePane);
-                        } else if (btn == MouseButton.SECONDARY) {
-                            rightClick(squarePane);
-                        }
-                    }
-                });
-
+                addClickability(squarePane);
                 int b = squarePane.getSquare().getAdjacentBombs();
 
                 //mikäli vierekkäisten pommien määrä on positiivinen, ja
@@ -81,8 +72,24 @@ public class MinesweeperUi extends Application {
         }
         return gridPane;
     }
+    
+    // Lisätään parametriruudulle klikattavuustoiminnot.
+    private void addClickability(SquarePane squarePane) {
+        squarePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-    // tässä asetetaan numeroille omat värit, niin että ne erottuvat toisistaan.
+            @Override
+            public void handle(MouseEvent event) {
+                MouseButton btn = event.getButton();
+                if (btn == MouseButton.PRIMARY) {
+                    leftClick(squarePane);
+                } else if (btn == MouseButton.SECONDARY) {
+                    rightClick(squarePane);
+                }
+            }
+        });
+    }
+
+    // Tässä asetetaan numeroille omat värit, niin että ne erottuvat toisistaan.
     private static void setSquareTextColor(SquarePane squarePane, int b) {
         if (b == 1) {
             squarePane.getText().setFill(Color.web("0x0000ff"));
@@ -112,6 +119,7 @@ public class MinesweeperUi extends Application {
 
     public void leftClick(SquarePane sqPane) {
 
+        // Jos ruudussa on lippu, se poistetaan kun ruutu aukaistaan.
         if (sqPane.getFlag().isVisible()) {
             sqPane.showFlag(false);
         }
@@ -127,15 +135,15 @@ public class MinesweeperUi extends Application {
             revealAllBombs();
             System.out.println("Hähää, hävisit.");
             Timeline timeline = new Timeline(new KeyFrame(
-                    Duration.millis(2000),
+                    Duration.millis(3000),
                     ae -> scene.setRoot(mainMenu)));
             timeline.play();
 
             return;
         }
 
-        // Muissa tapauksissa paljastetaan alla oleva teksti (numero) ja
-        // värjätään tausta valkoiseksi, niin että numero erottuu selvästi.
+        // Muissa tapauksissa paljastetaan alla oleva teksti (numero) piiloittamalla
+        // "kannen" (edge). Asetetaan ruutu "auki"-tilaan myös logiikassa.
         sqPane.setOpen(true);
         sqPane.showEdge(false);
 
@@ -148,12 +156,13 @@ public class MinesweeperUi extends Application {
             return;
         }
 
-        // Jos 
+        // Jos ruudussa on jo lippu, se poistetaan.
         if (sqPane.getFlag().isVisible()) {
             sqPane.showFlag(false);
             return;
         }
 
+        // Jos ruudussa ei ole lippua, siihen lisätään sellainen.
         if (!sqPane.getFlag().isVisible()) {
             sqPane.showFlag(true);
         }
@@ -175,6 +184,7 @@ public class MinesweeperUi extends Application {
         }
     }
 
+    // Luodaan "Kentän koko"-elementti päävalikkoon.
     private static HBox createSizeHBox(TextField sizeX, TextField sizeY) {
         sizeX.setMaxWidth(40);
         sizeY.setMaxWidth(40);
@@ -185,16 +195,19 @@ public class MinesweeperUi extends Application {
         hbS.setSpacing(10);
         return hbS;
     }
-    
+
+    // Luodaan "Miinoja"-elementti päävalikkoon.
     private static HBox createMinesHBox(TextField mines) {
         mines.setMaxWidth(40);
-        Label labelM = new Label("Miinoja (%):");
+        Label labelM = new Label("Miinoja:");
+        Label labelP = new Label("%");
         HBox hbM = new HBox();
-        hbM.getChildren().addAll(labelM, mines);
+        hbM.getChildren().addAll(labelM, mines, labelP);
         hbM.setSpacing(10);
         return hbM;
     }
-    
+
+    // Luodaan "Aikaraja"-elementti päävalikkoon.
     private static HBox createTimeHBox(TextField time) {
         time.setMaxWidth(40);
         Label labelT = new Label("Aikaraja:");
@@ -207,13 +220,13 @@ public class MinesweeperUi extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        //aloitusnäyttö
+        // Luodaan päävalikon elementit.
         Text title = new Text("Minesweeper");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
-        
+
         TextField sizeX = new TextField("20");
         TextField sizeY = new TextField("20");
-        TextField mines = new TextField("0.2");
+        TextField mines = new TextField("20");
         TextField time = new TextField();
 
         HBox hbS = createSizeHBox(sizeX, sizeY);
@@ -225,17 +238,22 @@ public class MinesweeperUi extends Application {
         playButton.setFont(Font.font(25));
         playButton.setOnAction(e -> {
 
-            //kun klikkaa play-nappulaa, luo pelinäytön
+            // Kun klikkaa pelaa-nappulaa, luo pelinäytön antamilla arvoilla.
             squaresX = Integer.parseInt(sizeX.getText());
             squaresY = Integer.parseInt(sizeY.getText());
-            game = new MinesweeperGame(squaresX, squaresY, Double.parseDouble(mines.getText()));
-            stage.setWidth(SQUARE_SIZE * squaresX);
-            stage.setHeight(SQUARE_SIZE * squaresY);
+            game = new MinesweeperGame(squaresX, squaresY, 0.01 * Double.parseDouble(mines.getText()));
+
+            int x = SQUARE_SIZE * squaresX;
+            int y = SQUARE_SIZE * squaresY;
+            stage.setWidth(x);
+            stage.setHeight(y);
             scene.setRoot(createGrid());
         });
 
         mainMenu = new BorderPane();
+        mainMenu.setPrefSize(800, 600);
 
+        // Lisätään kaikki päävalikon elementit VBoxiin (vertical box).
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
 
@@ -248,12 +266,29 @@ public class MinesweeperUi extends Application {
 
         mainMenu.setCenter(centerVbox);
 
-        scene = new Scene(mainMenu, 800, 600);
-
-        //aloitusnäytön setup
+        // Luodaan scene. Asetetaan nimeksi Minesweeper ja laitetaan se stageen.
+        scene = new Scene(mainMenu);
         stage.setTitle("Minesweeper");
         stage.setScene(scene);
         stage.show();
+        
+        stage.setWidth(900);
+        
+        System.out.println(scene.getWidth());
+
+//        scene.widthProperty().addListener(new ChangeListener<Number>() {
+//
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                System.out.println("Width: " + newSceneWidth);
+//            }
+//        });
+//        scene.heightProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+//                System.out.println("Height: " + newSceneHeight);
+//            }
+//        });
     }
 
     public static void main(String[] args) {

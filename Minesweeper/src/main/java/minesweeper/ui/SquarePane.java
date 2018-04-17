@@ -51,7 +51,7 @@ public class SquarePane extends StackPane {
         edge.setStrokeWidth(4);
         edge.setStroke(Color.web("0xf2f2f2"));
 
-        text.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
+        text.setFont(Font.font("Verdana", FontWeight.BOLD, SQUARE_SIZE / 2 + 6));
         
         if (square.isBomb()) {
             text.setText("\u23FA");
