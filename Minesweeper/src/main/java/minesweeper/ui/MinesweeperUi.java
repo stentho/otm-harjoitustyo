@@ -72,7 +72,7 @@ public class MinesweeperUi extends Application {
         }
         return gridPane;
     }
-    
+
     // Lisätään parametriruudulle klikattavuustoiminnot.
     private void addClickability(SquarePane squarePane) {
         squarePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -133,7 +133,7 @@ public class MinesweeperUi extends Application {
         if (sqPane.getSquare().isBomb()) {
 
             revealAllBombs();
-            System.out.println("Hähää, hävisit.");
+            System.out.println("Hävisit.");
             Timeline timeline = new Timeline(new KeyFrame(
                     Duration.millis(3000),
                     ae -> scene.setRoot(mainMenu)));
@@ -243,11 +243,14 @@ public class MinesweeperUi extends Application {
             squaresY = Integer.parseInt(sizeY.getText());
             game = new MinesweeperGame(squaresX, squaresY, 0.01 * Double.parseDouble(mines.getText()));
 
-            int x = SQUARE_SIZE * squaresX;
-            int y = SQUARE_SIZE * squaresY;
+            int x = SQUARE_SIZE * squaresX + 80 + 2;
+            int y = SQUARE_SIZE * squaresY + 80 + 26;
             stage.setWidth(x);
             stage.setHeight(y);
-            scene.setRoot(createGrid());
+
+            BorderPane border = createGameBorder();
+            
+            scene.setRoot(border);
         });
 
         mainMenu = new BorderPane();
@@ -271,24 +274,50 @@ public class MinesweeperUi extends Application {
         stage.setTitle("Minesweeper");
         stage.setScene(scene);
         stage.show();
-        
-        stage.setWidth(900);
-        
+
         System.out.println(scene.getWidth());
 
-//        scene.widthProperty().addListener(new ChangeListener<Number>() {
-//
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-//                System.out.println("Width: " + newSceneWidth);
-//            }
-//        });
-//        scene.heightProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-//                System.out.println("Height: " + newSceneHeight);
-//            }
-//        });
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                System.out.println("Width: " + newSceneWidth);
+            }
+        });
+        scene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                System.out.println("Height: " + newSceneHeight);
+            }
+        });
+    }
+
+    public void resetScreenSize() {
+
+    }
+
+    public BorderPane createGameBorder() {
+        BorderPane border = new BorderPane();
+        border.setCenter(createGrid());
+        
+        border.setBottom(createHBox(new Insets(20)));
+        border.setTop(createHBox(new Insets(20)));
+        border.setLeft(createVBox(new Insets(20)));
+        border.setRight(createVBox(new Insets(20)));
+        
+        return border;
+    }
+    
+    public HBox createHBox(Insets inset) {
+        HBox hb = new HBox();
+        hb.setPadding(inset);
+        return hb;
+    }
+    
+    public VBox createVBox(Insets inset) {
+        VBox vb = new VBox();
+        vb.setPadding(inset);
+        return vb;
     }
 
     public static void main(String[] args) {

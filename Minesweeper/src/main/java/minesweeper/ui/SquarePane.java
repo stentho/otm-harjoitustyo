@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import minesweeper.game.Square;
@@ -33,9 +34,9 @@ public class SquarePane extends StackPane {
         getChildren().add(tile);
         getChildren().add(text);
         getChildren().add(edge);
-        getChildren().add(flagbase);
         getChildren().add(flagpole);
         getChildren().add(flag);
+        getChildren().add(flagbase);
         setTranslateX(square.getX() * SQUARE_SIZE);
         setTranslateY(square.getY() * SQUARE_SIZE);
     }
@@ -51,7 +52,7 @@ public class SquarePane extends StackPane {
         edge.setStrokeWidth(4);
         edge.setStroke(Color.web("0xf2f2f2"));
 
-        text.setFont(Font.font("Verdana", FontWeight.BOLD, SQUARE_SIZE / 2 + 6));
+        text.setFont(Font.font("Verdana", FontWeight.BOLD, (SQUARE_SIZE / 2) + 6));
         
         if (square.isBomb()) {
             text.setText("\u23FA");
@@ -64,12 +65,12 @@ public class SquarePane extends StackPane {
     private void setUpFlagGraphics() {
         flag = new Polygon();
         flag.getPoints().addAll(new Double[]{
-            0.0, 10.0,
-            15.0, 0.0,
-            15.0, 15.0
+            0.0, (SQUARE_SIZE / 4.0),
+            (SQUARE_SIZE / 3.0), 0.0,
+            (SQUARE_SIZE / 3.0), (SQUARE_SIZE / 3.0)
         });
-        flag.setTranslateY(-8);
-        flag.setTranslateX(-6);
+        flag.setTranslateY(-(SQUARE_SIZE / 6.0));
+        flag.setTranslateX(-(SQUARE_SIZE / 9.0));
         flag.setFill(Color.RED);
         flag.setVisible(false);
 
@@ -78,7 +79,7 @@ public class SquarePane extends StackPane {
         flagpole.setVisible(false);
 
         flagbase = new Rectangle(SQUARE_SIZE * 0.5, SQUARE_SIZE * 0.1);
-        flagbase.setTranslateY(12);
+        flagbase.setTranslateY((SQUARE_SIZE / 4.0));
         flagbase.setVisible(false);
     }
 
