@@ -56,7 +56,7 @@ JavaDocia voi tarkastella avaamalla selaimella tiedosto _target/site/apidocs/ind
 [Checkstyle.xml](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/checkstyle.xml)-tiedoston määrittelemät tarkistukset suoritetaan komennolla
 
 ```
-mvn mvn jxr:jxr checkstyle:checkstyle
+mvn jxr:jxr checkstyle:checkstyle
 ```
 
 Virheilmoitukset yms. löytyvät tiedostosta _target/site/checkstyle.html_
