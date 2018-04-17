@@ -9,7 +9,7 @@
 | 16.4. | 2    | "lippu"-toiminnon lisäys |
 |       | 2    | käyttöliittymän selkeyttäminen |
 |       | 1    | grafiikan kehittäminen |
-| 17.4. | 3    | peliruutu skaalautuu kentän mukaan |
+| 17.4. | 3    | peliruutu skaalautuu kentän mukaan, samoin graafiset elementit |
 |       | 3    | lisää testejä, pelilogiikkaan lisäyksiä |
-|       | 2    | dokumentaatioon lisäyksiä, luokkakaavio |
-| yht   | 26   |
+|       | 2    | dokumentaatioon lisäyksiä, pakkauskaavio |
+| yht   | 27   |
