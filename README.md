@@ -8,7 +8,7 @@ Tällä sovelluksella pelataan Minesweeperia!
 
 [Vaatimusmäärittely](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/vaatimusmaarittely.md)
 
-[Arkkitehtuurikuvaus](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/arkkitehtuurikuvaus.md)
+[Arkkitehtuurikuvaus](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/arkkitehtuuri.md)
 
 [Testausdokumentti](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/testausdokumentti.md)
 
