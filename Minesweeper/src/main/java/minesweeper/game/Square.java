@@ -1,15 +1,12 @@
 package minesweeper.game;
 
-import javafx.scene.layout.StackPane;
-
-// Yksi Square-olio on yksi ruutu pelissä. Tässä luokassa määritellään sen logiikka.
 // SquarePane hakee istelleen oliomuuttujakseen Square-olion.
 public class Square {
 
     private int x;
     private int y;
     boolean bomb;
-    boolean isOpen;
+    boolean open;
     private int adjacentBombs;
 
     public Square(int x, int y, boolean bomb) {
@@ -45,7 +42,7 @@ public class Square {
     }
 
     public boolean isOpen() {
-        return isOpen;
+        return open;
     }
 
     public void setX(int x) {
@@ -64,8 +61,8 @@ public class Square {
         this.adjacentBombs = adjacentBombs;
     }
 
-    public void setIsOpen(boolean isOpen) {
-        this.isOpen = isOpen;
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
     @Override

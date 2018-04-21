@@ -5,7 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import minesweeper.game.Square;
@@ -118,7 +117,7 @@ public class SquarePane extends StackPane {
     }
 
     public void setOpen(boolean bool) {
-        square.setIsOpen(bool);
+        square.setOpen(bool);
     }
 
     public void setText(String text) {

@@ -147,4 +147,30 @@ public class MinesweeperGame {
         }
         return b;
     }
+    
+    public int numberOfUnopenedSquares() {
+        int i = 0;
+        for (int y = 0; y < squaresY; y++) {
+            for (int x = 0; x < squaresX; x++) {
+                Square square = field[x][y];
+                if (!square.isOpen()) {
+                    i++;
+                }
+            }
+        }
+        return i;
+    }
+    
+    public int numberOfBombs() {
+        int i = 0;
+        for (int y = 0; y < squaresY; y++) {
+            for (int x = 0; x < squaresX; x++) {
+                Square square = field[x][y];
+                if (square.isBomb()) {
+                    i++;
+                }
+            }
+        }
+        return i;
+    }
 }

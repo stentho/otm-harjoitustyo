@@ -4,6 +4,8 @@ import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -29,7 +31,7 @@ import minesweeper.game.Square;
 public class MinesweeperUi extends Application {
 
     private MinesweeperGame game;
-    private final static int SQUARE_SIZE = 40;
+    private final static int SQUARE_SIZE = 20;
     private Stage stage;
     private Scene scene;
     private BorderPane mainMenu;
@@ -127,16 +129,7 @@ public class MinesweeperUi extends Application {
 
         // Jos ruutu on pommi, hypätään takaisin päävalikkoon.
         if (sqPane.getSquare().isBomb()) {
-
-            revealAllBombs();
-            System.out.println("Hävisit.");
-            Timeline timeline = new Timeline(new KeyFrame(
-                    Duration.millis(2500),
-                    ae -> scene.setRoot(mainMenu)),
-                    new KeyFrame(
-                            Duration.millis(2500),
-                            ae -> resetScreenSize(800, 600)));
-            timeline.play();
+            loseGame();
             return;
         }
 
@@ -144,6 +137,13 @@ public class MinesweeperUi extends Application {
         // "kannen" (edge). Asetetaan ruutu "auki"-tilaan myös logiikassa.
         sqPane.setOpen(true);
         sqPane.showEdge(false);
+        
+        System.out.println("Unopened: " + game.numberOfUnopenedSquares());
+        System.out.println("Bombs: " + game.numberOfBombs());
+        
+        if (game.numberOfUnopenedSquares() == game.numberOfBombs()) {
+            winGame();
+        }
 
     }
 
@@ -174,7 +174,7 @@ public class MinesweeperUi extends Application {
 
             // Avataan kaikki ruudut siksi, että silloin niitä ei voi enää avata
             // klikkaamalla. Muuten voisi jatkaa pelaamista pelin päätyttyään.
-            squarePane.getSquare().setIsOpen(true);
+            squarePane.setOpen(true);
 
             if (squarePane.getSquare().isBomb()) {
                 squarePane.getTile().setFill(Color.RED);
@@ -245,9 +245,9 @@ public class MinesweeperUi extends Application {
 
             resetScreenSize(SQUARE_SIZE * squaresX + 80, SQUARE_SIZE * squaresY + 80);
 
-            BorderPane border = createGameBorder();
+            BorderPane gamePane = createGameBorder();
 
-            scene.setRoot(border);
+            scene.setRoot(gamePane);
         });
 
         mainMenu = new BorderPane();
@@ -281,23 +281,23 @@ public class MinesweeperUi extends Application {
         stage.setHeight(height + 39);
     }
 
-    // Testaukseen tarkoitettu metodi. Tämä tulostaa ikkunan leveyden ja korkeuden, 
-    // aina kun jompikumpi muuttuu.
-//    public void addStageSizeListeners() {
-//        scene.widthProperty().addListener(new ChangeListener<Number>() {
-//
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-//                System.out.println("Width: " + newSceneWidth);
-//            }
-//        });
-//        scene.heightProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-//                System.out.println("Height: " + newSceneHeight);
-//            }
-//        });
-//    }
+//     Testaukseen tarkoitettu metodi. Tämä tulostaa ikkunan leveyden ja korkeuden, 
+//     aina kun jompikumpi muuttuu.
+    public void addStageSizeListeners() {
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                System.out.println("Width: " + newSceneWidth);
+            }
+        });
+        scene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                System.out.println("Height: " + newSceneHeight);
+            }
+        });
+    }
 
     // Luodaan pelinäkymän reunat
     public BorderPane createGameBorder() {
@@ -326,5 +326,28 @@ public class MinesweeperUi extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void loseGame() {
+        revealAllBombs();
+        System.out.println("Hävisit.");
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(2500),
+                ae -> scene.setRoot(mainMenu)),
+                new KeyFrame(
+                        Duration.millis(2500),
+                        ae -> resetScreenSize(800, 600)));
+        timeline.play();
+    }
+
+    private void winGame() {
+        System.out.println("Voitit!");
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(2500),
+                ae -> scene.setRoot(mainMenu)),
+                new KeyFrame(
+                        Duration.millis(2500),
+                        ae -> resetScreenSize(800, 600)));
+        timeline.play();
     }
 }
