@@ -14,6 +14,10 @@ Tällä sovelluksella pelataan Minesweeperia!
 
 [Työaikakirjanpito](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/tuntikirjanpito.md)
 
+## Releaset
+
+Viikko 5 (linkki tulee myöhemmin)
+
 ## Komentorivitoiminnot
 
 ### Testausdokumentti
