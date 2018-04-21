@@ -16,7 +16,7 @@ Tällä sovelluksella pelataan Minesweeperia!
 
 ## Releaset
 
-Viikko 5 (linkki tulee myöhemmin)
+[Viikko 5](https://github.com/stentho/otm-harjoitustyo/releases/tag/viikko5-beta)
 
 ## Komentorivitoiminnot
 
