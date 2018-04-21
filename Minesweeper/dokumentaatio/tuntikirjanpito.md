@@ -12,4 +12,6 @@
 | 17.4. | 3    | peliruutu skaalautuu kentän mukaan, samoin graafiset elementit |
 |       | 3    | lisää testejä, pelilogiikkaan lisäyksiä |
 |       | 2    | dokumentaatioon lisäyksiä, pakkauskaavio |
-| yht   | 27   |
+| 21.4  | 2    | pelin voi nyt voittaa, voittoruutu lisätty |
+|       | 2    | sekvenssikaavio |
+| yht   | 31   |
