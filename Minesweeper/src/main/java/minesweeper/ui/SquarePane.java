@@ -95,6 +95,10 @@ public class SquarePane extends StackPane {
     public boolean isOpen() {
         return square.isOpen();
     }
+    
+    public boolean isBomb() {
+        return square.isBomb();
+    }
 
     public Text getText() {
         return text;
@@ -115,9 +119,17 @@ public class SquarePane extends StackPane {
     public Rectangle getTile() {
         return tile;
     }
+    
+    public int getAdjacentBombs() {
+        return square.getAdjacentBombs();
+    }
 
     public void setOpen(boolean bool) {
         square.setOpen(bool);
+    }
+    
+    public void setBomb(boolean bool) {
+        square.setBomb(bool);
     }
 
     public void setText(String text) {

@@ -58,7 +58,7 @@ public class MinesweeperUi extends Application {
 
                 SquarePane squarePane = new SquarePane(grid[x][y], SQUARE_SIZE);
                 addClickability(squarePane);
-                int b = squarePane.getSquare().getAdjacentBombs();
+                int b = squarePane.getAdjacentBombs();
 
                 //mikäli vierekkäisten pommien määrä on positiivinen, ja
                 //ei ole itse pommi, niin piirretään numero ruutuun.
@@ -128,8 +128,8 @@ public class MinesweeperUi extends Application {
             return;
         }
 
-        // Jos ruutu on pommi, hypätään takaisin päävalikkoon.
-        if (sqPane.getSquare().isBomb()) {
+        // Jos ruutu on pommi, pelaaja häviää pelin.
+        if (sqPane.isBomb()) {
             loseGame();
             return;
         }
@@ -139,9 +139,12 @@ public class MinesweeperUi extends Application {
         sqPane.setOpen(true);
         sqPane.showEdge(false);
         
-        System.out.println("Unopened: " + game.numberOfUnopenedSquares());
-        System.out.println("Bombs: " + game.numberOfBombs());
+//        System.out.println("Unopened: " + game.numberOfUnopenedSquares());
+//        System.out.println("Bombs: " + game.numberOfBombs());
         
+        // Peli laskee joka klikkauksen jälkeen, montako avaamatonta ruutua on
+        // vielä jäljellä. Mikäli määrä on sama kuin pommien määrä, peli on 
+        // voitettu.
         if (game.numberOfUnopenedSquares() == game.numberOfBombs()) {
             winGame();
         }
