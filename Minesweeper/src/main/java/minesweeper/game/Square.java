@@ -71,6 +71,6 @@ public class Square {
 
     @Override
     public String toString() {
-        return x + ", " + y + ", bomb: " + bomb;
+        return x + ", " + y + ", bomb: " + bomb + ", open: " + open;
     }
 }

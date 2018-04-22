@@ -133,14 +133,17 @@ public class MinesweeperUi extends Application {
             loseGame();
             return;
         }
+        
+        if (sqPane.getAdjacentBombs() == 0) {
+            game.openAdjacentSquaresIfZero(sqPane.getSquare());
+            revealOpenedSquares();
+        }
 
         // Muissa tapauksissa paljastetaan alla oleva teksti (numero) piiloittamalla
         // "kannen" (edge). Asetetaan ruutu "auki"-tilaan myös logiikassa.
         sqPane.setOpen(true);
         sqPane.showEdge(false);
 
-//        System.out.println("Unopened: " + game.numberOfUnopenedSquares());
-//        System.out.println("Bombs: " + game.numberOfBombs());
         // Peli laskee joka klikkauksen jälkeen, montako avaamatonta ruutua on
         // vielä jäljellä. Mikäli määrä on sama kuin pommien määrä, peli on 
         // voitettu.
@@ -148,6 +151,19 @@ public class MinesweeperUi extends Application {
             winGame();
         }
 
+    }
+    
+    private void revealOpenedSquares() {
+        for (int i = 0; i < (squaresX * squaresY); i++) {
+            Node n = gridPane.getChildren().get(i);
+            SquarePane squarePane = (SquarePane) n;
+
+            // Avataan kaikki ruudut siksi, että silloin niitä ei voi enää avata
+            // klikkaamalla. Muuten voisi jatkaa pelaamista pelin päätyttyään.
+            if (squarePane.isOpen()) {
+                squarePane.showEdge(false);
+            }
+        }
     }
 
     private void rightClick(SquarePane sqPane) {
@@ -283,10 +299,10 @@ public class MinesweeperUi extends Application {
     private void winGame() {
         System.out.println("Voitit!");
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
+                Duration.millis(2000),
                 ae -> scene.setRoot(winScreen)),
                 new KeyFrame(
-                        Duration.millis(1000),
+                        Duration.millis(2000),
                         ae -> resetScreenSize(800, 600)));
         timeline.play();
     }

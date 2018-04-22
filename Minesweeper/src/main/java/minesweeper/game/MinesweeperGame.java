@@ -106,16 +106,7 @@ public class MinesweeperGame {
         // tässä tehdään ArrayList kokonaisluvuista, millä saadaan viereisten
         // ruutujen koordinaatit. Esim jos nykyinen ruutu on (4,5) paikassa,
         // niin sen suoraan yläpuolella oleva ruutu on (0,-1) suhteessa tähän jne.
-        ArrayList<Integer> constants = new ArrayList<>();
-        constants.addAll(Arrays.asList(
-                -1, -1,
-                0, -1,
-                1, -1,
-                -1, 0,
-                1, 0,
-                -1, 1,
-                0, 1,
-                1, 1));
+        ArrayList<Integer> constants = getRelativeAdjacentPositions();
 
         for (int i = 0; i < constants.size(); i++) {
 
@@ -147,7 +138,45 @@ public class MinesweeperGame {
         }
         return b;
     }
-    
+
+    // Tässä metodissa avataan kaikki tyhjät vierekkäiset ruudut, sekä niiden
+    // ympärillä olevat ruudut (ei pommeja kuitenkaan).
+    public void openAdjacentSquaresIfZero(Square square) {
+        int b = calculateAdjacentBombs(square);
+        
+        if (b != 0 && !square.isBomb()) {
+            square.setOpen(true);
+            return;
+        }
+        
+        if (b == 0 && !square.isOpen()) {
+            square.setOpen(true);
+            ArrayList<Square> adjSq = getAdjacentSquares(square);
+            
+            for (int i = 0; i < adjSq.size(); i++) {
+                Square sq = adjSq.get(i);
+                openAdjacentSquaresIfZero(sq);
+            }
+        }
+    }
+
+    // tässä tehdään ArrayList kokonaisluvuista, millä saadaan viereisten
+    // ruutujen koordinaatit. Esim jos nykyinen ruutu on (4,5) paikassa,
+    // niin sen suoraan yläpuolella oleva ruutu on (0,-1) suhteessa tähän jne.
+    public ArrayList<Integer> getRelativeAdjacentPositions() {
+        ArrayList<Integer> constants = new ArrayList<>();
+        constants.addAll(Arrays.asList(
+                -1, -1,
+                0, -1,
+                1, -1,
+                -1, 0,
+                1, 0,
+                -1, 1,
+                0, 1,
+                1, 1));
+        return constants;
+    }
+
     public int numberOfUnopenedSquares() {
         int i = 0;
         for (int y = 0; y < squaresY; y++) {
@@ -160,7 +189,7 @@ public class MinesweeperGame {
         }
         return i;
     }
-    
+
     public int numberOfBombs() {
         int i = 0;
         for (int y = 0; y < squaresY; y++) {

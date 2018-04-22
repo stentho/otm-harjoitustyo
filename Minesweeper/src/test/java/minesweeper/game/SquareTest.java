@@ -76,7 +76,8 @@ public class SquareTest {
         sq.setX(3);
         sq.setY(4);
         sq.setBomb(true);
-        String stringB = "3, 4, bomb: true";
+        sq.setOpen(true);
+        String stringB = "3, 4, bomb: true, open: true";
         assertEquals(stringB, sq.toString());
     }
 }
