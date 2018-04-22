@@ -14,4 +14,5 @@
 |       | 2    | dokumentaatioon lisäyksiä, pakkauskaavio |
 | 21.4  | 2    | pelin voi nyt voittaa, voittoruutu lisätty |
 |       | 2    | sekvenssikaavio |
-| yht   | 31   |
+| 22.4  | 3    | lisää testejä |
+| yht   | 34   |

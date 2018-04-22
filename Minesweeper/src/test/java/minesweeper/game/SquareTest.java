@@ -1,3 +1,5 @@
+package minesweeper.game;
+
 
 import minesweeper.game.Square;
 import org.junit.After;
