@@ -15,4 +15,5 @@
 | 21.4  | 2    | pelin voi nyt voittaa, voittoruutu lisätty |
 |       | 2    | sekvenssikaavio |
 | 22.4  | 3    | lisää testejä |
-| yht   | 34   |
+|       | 2    | tyhjät ruudut aukeaa oikein |
+| yht   | 36   |
