@@ -26,8 +26,8 @@ public class MinesweeperGame {
 
         if (mF > 1) {
             mineFreq = 1;
-        } else if (mF < 0.1) {
-            mineFreq = 0.1;
+        } else if (mF < 0) {
+            mineFreq = 0;
         } else {
             mineFreq = mF;
         }
