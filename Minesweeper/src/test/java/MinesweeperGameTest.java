@@ -78,11 +78,10 @@ public class MinesweeperGameTest {
         ArrayList<Square> adjSq = game.getAdjacentSquares(sq);
         // valittiin ruutu (3,3), eli sen ympärillä olevat ruudut ovat (jos 
         // mennään riveittäin ylhäältä alas vasemmalta oikealle, sq on (3,3)):
-        
+
         // (2,2), (3,2), (4,2)
         // (2,3),  sq  , (4,3)
         // (2,4), (3,4), (4,4)
-        
         ArrayList<Square> comparison = new ArrayList<>();
         comparison.addAll(Arrays.asList(
                 new Square(2, 2, false),
@@ -109,11 +108,10 @@ public class MinesweeperGameTest {
         ArrayList<Square> adjSq = game.getAdjacentSquares(sq);
         // valittiin ruutu (0,3), eli sen ympärillä olevat ruudut ovat (jos 
         // mennään riveittäin ylhäältä alas vasemmalta oikealle, sq on (0,3)):
-        
+
         //  W, (0,2), (1,2)
         //  W,  sq  , (1,3)
         //  W, (0,4), (1,4)
-        
         ArrayList<Square> comparison = new ArrayList<>();
         comparison.addAll(Arrays.asList(
                 new Square(0, 2, false),
@@ -130,18 +128,17 @@ public class MinesweeperGameTest {
             assertEquals(sqA.getY(), sqB.getY());
         }
     }
-    
-        @Test
+
+    @Test
     public void adjacentSquaresCorrectPlacementAtYEdge() {
         Square sq = game.getField()[3][0];
         ArrayList<Square> adjSq = game.getAdjacentSquares(sq);
         // valittiin ruutu (0,3), eli sen ympärillä olevat ruudut ovat (jos 
         // mennään riveittäin ylhäältä alas vasemmalta oikealle, sq on (3,0)):
-        
+
         //  WWWWWWWWWWWWWWWWWWW
         //  (2,0),  sq  , (4,0)
         //  (2,1), (3,1), (4,1)
-        
         ArrayList<Square> comparison = new ArrayList<>();
         comparison.addAll(Arrays.asList(
                 new Square(2, 0, false),

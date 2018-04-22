@@ -138,10 +138,9 @@ public class MinesweeperUi extends Application {
         // "kannen" (edge). Asetetaan ruutu "auki"-tilaan myös logiikassa.
         sqPane.setOpen(true);
         sqPane.showEdge(false);
-        
+
 //        System.out.println("Unopened: " + game.numberOfUnopenedSquares());
 //        System.out.println("Bombs: " + game.numberOfBombs());
-        
         // Peli laskee joka klikkauksen jälkeen, montako avaamatonta ruutua on
         // vielä jäljellä. Mikäli määrä on sama kuin pommien määrä, peli on 
         // voitettu.
@@ -220,30 +219,6 @@ public class MinesweeperUi extends Application {
         return hbT;
     }
 
-    @Override
-    public void start(Stage st) throws Exception {
-        stage = st;
-
-        // Luodaan päävalikon ruutu mainMenu.
-        mainMenu = new BorderPane();
-        mainMenu.setPrefSize(800, 600);
-
-        // Luodaan Vbox missä on kaikki päävalikon elementit, ja lisätään ne
-        // päävalikkoruutuun.
-        mainMenu.setCenter(createMainMenuVBox());
-        
-        // Luodaan voittoruutu.
-        winScreen = new BorderPane();
-        winScreen.setPrefSize(800, 600);
-        winScreen.setCenter(createWinScreenVBox());
-
-        // Luodaan scene. Asetetaan nimeksi Minesweeper ja laitetaan se stageen.
-        scene = new Scene(mainMenu);
-        stage.setTitle("Minesweeper");
-        stage.setScene(scene);
-        stage.show();
-    }
-
     // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +16 ja +39
     // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin.
     // Ne lasketaan stagen leveyteen ja korkeuteen.
@@ -269,12 +244,10 @@ public class MinesweeperUi extends Application {
 //            }
 //        });
 //    }
-
     // Luodaan pelinäkymän reunat
     public BorderPane createGameBorder() {
         BorderPane border = new BorderPane();
         border.setCenter(createGrid());
-
         border.setBottom(createHBox(new Insets(20)));
         border.setTop(createHBox(new Insets(20)));
         border.setLeft(createVBox(new Insets(20)));
@@ -294,11 +267,7 @@ public class MinesweeperUi extends Application {
         vb.setPadding(inset);
         return vb;
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+    
     private void loseGame() {
         revealAllBombs();
         System.out.println("Hävisit.");
@@ -361,29 +330,33 @@ public class MinesweeperUi extends Application {
         centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT, playButton));
         return centerVbox;
     }
-    
+
     private VBox createWinScreenVBox() {
         Text title = new Text("Voitit, onneksi olkoon!");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
-        
+
         Text score = new Text("Pisteet:");
         score.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-        
+
         Text size = new Text("Kentän koko:");
         size.setFont(Font.font("Verdana", 18));
-        
+
         Text mines = new Text("Miinoja: " + "%");
         mines.setFont(Font.font("Verdana", 18));
-        
+
         Text time = new Text("Aika: ");
         time.setFont(Font.font("Verdana", 18));
-        
+
         TextField name = new TextField();
         name.setMaxWidth(200);
-        createNameHBox(name);
         HBox hbN = createNameHBox(name);
+
+        Button submitName = new Button("Lähetä");
+        Button backToMain = new Button("Takaisin päävalikkoon");
         
-        Button submitName = new Button("Submit");
+        backToMain.setOnAction(e -> {
+            scene.setRoot(mainMenu);
+        });
         
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
@@ -395,16 +368,46 @@ public class MinesweeperUi extends Application {
         centerVbox.setMargin(time, new Insets(0, 0, 20, 0));
         centerVbox.setMargin(hbN, new Insets(50, 0, 0, 0));
         centerVbox.setMargin(submitName, new Insets(20, 0, 0, 0));
+        centerVbox.setMargin(backToMain, new Insets(20, 0, 0, 0));
 
-        centerVbox.getChildren().addAll(Arrays.asList(title, score, size, mines, time, hbN, submitName));
+        centerVbox.getChildren().addAll(Arrays.asList(title, score, size, mines,
+                time, hbN, submitName, backToMain));
         return centerVbox;
     }
 
-    private HBox createNameHBox(TextField name) {
+    private static HBox createNameHBox(TextField name) {
         Label labelN = new Label("Nimi:");
         HBox hbN = new HBox();
         hbN.getChildren().addAll(labelN, name);
         hbN.setSpacing(10);
         return hbN;
+    }
+
+    @Override
+    public void start(Stage st) throws Exception {
+        stage = st;
+
+        // Luodaan päävalikon ruutu mainMenu.
+        mainMenu = new BorderPane();
+        mainMenu.setPrefSize(800, 600);
+
+        // Luodaan Vbox missä on kaikki päävalikon elementit, ja lisätään ne
+        // päävalikkoruutuun.
+        mainMenu.setCenter(createMainMenuVBox());
+
+        // Luodaan voittoruutu.
+        winScreen = new BorderPane();
+        winScreen.setPrefSize(800, 600);
+        winScreen.setCenter(createWinScreenVBox());
+
+        // Luodaan scene. Asetetaan nimeksi Minesweeper ja laitetaan se stageen.
+        scene = new Scene(mainMenu);
+        stage.setTitle("Minesweeper");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
