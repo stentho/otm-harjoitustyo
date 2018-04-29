@@ -3,8 +3,6 @@ package minesweeper.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import minesweeper.game.MinesweeperGame;
-import minesweeper.game.Square;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

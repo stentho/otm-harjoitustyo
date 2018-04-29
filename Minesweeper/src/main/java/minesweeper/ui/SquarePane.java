@@ -55,10 +55,7 @@ public class SquarePane extends StackPane {
         
         if (square.isBomb()) {
             text.setText("\u23FA");
-        } else {
-            text.setText("");
         }
-//        text.setVisible(false);
     }
 
     private void setUpFlagGraphics() {
@@ -69,12 +66,11 @@ public class SquarePane extends StackPane {
             (SQUARE_SIZE / 3.0), (SQUARE_SIZE / 3.0)
         });
         flag.setTranslateY(-(SQUARE_SIZE / 6.0));
-        flag.setTranslateX(-(SQUARE_SIZE / 9.0));
+        flag.setTranslateX(-(SQUARE_SIZE / 7.0));
         flag.setFill(Color.RED);
         flag.setVisible(false);
 
-        flagpole = new Rectangle(3, SQUARE_SIZE * 0.5);
-        flagpole.setFill(Color.RED);
+        flagpole = new Rectangle(SQUARE_SIZE * 0.05, SQUARE_SIZE * 0.5);
         flagpole.setVisible(false);
 
         flagbase = new Rectangle(SQUARE_SIZE * 0.5, SQUARE_SIZE * 0.1);
@@ -98,6 +94,10 @@ public class SquarePane extends StackPane {
     
     public boolean isBomb() {
         return square.isBomb();
+    }
+    
+    public boolean isFlagged() {
+        return flag.isVisible();
     }
 
     public Text getText() {

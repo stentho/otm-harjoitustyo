@@ -1,9 +1,15 @@
 package minesweeper.game;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import minesweeper.database.Database;
+import minesweeper.database.ScoreDao;
 
-// Tässä luokassa määritellään pelilogiikka.
+/**
+ * Pelilogiikkaa kuvaava luokka.
+ */
 public class MinesweeperGame {
 
     private Square[][] field;
@@ -75,6 +81,12 @@ public class MinesweeperGame {
     // tahansa ruutu on pommi. Sitä varmaan muutetaan tulevaisuudessa.
     public Square[][] createField() {
         field = new Square[squaresX][squaresY];
+        placeBombs();
+        calculateNumbersForField();
+        return field;
+    }
+
+    public Square[][] placeBombs() {
         for (int y = 0; y < squaresY; y++) {
             for (int x = 0; x < squaresX; x++) {
                 Square square = new Square(x, y, Math.random() < mineFreq);
@@ -143,16 +155,16 @@ public class MinesweeperGame {
     // ympärillä olevat ruudut (ei pommeja kuitenkaan).
     public void openAdjacentSquaresIfZero(Square square) {
         int b = calculateAdjacentBombs(square);
-        
+
         if (b != 0 && !square.isBomb()) {
             square.setOpen(true);
             return;
         }
-        
+
         if (b == 0 && !square.isOpen()) {
             square.setOpen(true);
             ArrayList<Square> adjSq = getAdjacentSquares(square);
-            
+
             for (int i = 0; i < adjSq.size(); i++) {
                 Square sq = adjSq.get(i);
                 openAdjacentSquaresIfZero(sq);
@@ -201,5 +213,14 @@ public class MinesweeperGame {
             }
         }
         return i;
+    }
+
+    public List<Score> getAllScores() throws ClassNotFoundException, SQLException {
+        Database database = new Database("jdbc:sqlite:scores.db");
+        database.init();
+        ScoreDao scoreDao = new ScoreDao(database);
+        
+        List<Score> scores = scoreDao.findAll();
+        return scores;
     }
 }

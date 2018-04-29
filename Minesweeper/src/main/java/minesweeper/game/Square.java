@@ -1,6 +1,9 @@
 package minesweeper.game;
 
-// SquarePane hakee istelleen oliomuuttujakseen Square-olion.
+/**
+ * Yksittäistä peliruutua kuvaava luokka.
+ */
+
 public class Square {
 
     private int x;

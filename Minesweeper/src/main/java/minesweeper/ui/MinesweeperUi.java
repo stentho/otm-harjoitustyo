@@ -1,5 +1,6 @@
 package minesweeper.ui;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -46,22 +47,20 @@ public class MinesweeperUi extends Application {
         gridPane = new Pane();
         gridPane.setPrefSize(SQUARE_SIZE * squaresX, SQUARE_SIZE * squaresY);
 
-        //ensin luodaan kenttä (logiikkatasolla), ja plaseerataan pommit satunnaisesti.
-        game.createField();
+        // ensin luodaan kenttä (logiikkatasolla), ja sijoitetaan pommit 
+        // satunnaisesti ja lasketaan ruutujen numeroarvot.
+        Square[][] grid = game.createField();
 
-        //sitten lasketaan ruutujen numeroarvot.
-        Square[][] grid = game.calculateNumbersForField();
-
-        //tehdään kentästä visuaalinen ruudukko
+        // tehdään kentästä visuaalinen ruudukko
         for (int y = 0; y < squaresY; y++) {
             for (int x = 0; x < squaresX; x++) {
 
                 SquarePane squarePane = new SquarePane(grid[x][y], SQUARE_SIZE);
                 addClickability(squarePane);
-                int b = squarePane.getAdjacentBombs();
 
                 //mikäli vierekkäisten pommien määrä on positiivinen, ja
                 //ei ole itse pommi, niin piirretään numero ruutuun.
+                int b = squarePane.getAdjacentBombs();
                 if (b > 0 && !squarePane.getSquare().isBomb()) {
                     squarePane.setText(Integer.toString(b));
                     setSquareTextColor(squarePane, b);
@@ -89,6 +88,7 @@ public class MinesweeperUi extends Application {
     }
 
     // Tässä asetetaan numeroille omat värit, niin että ne erottuvat toisistaan.
+    // Värit ovat valittu alkuperäisen Microsoftin Minesweeper-pelin mukaan.
     private static void setSquareTextColor(SquarePane squarePane, int b) {
         if (b == 1) {
             squarePane.getText().setFill(Color.web("0x0000ff"));
@@ -134,6 +134,9 @@ public class MinesweeperUi extends Application {
             return;
         }
         
+        // Jos ruutu on tyhjä (0 miinaa ympärillä), avataan myös viereiset
+        // ruudut. Mikäli ne on myös tyhjiä, avataan niiden ympärillä olevat
+        // ruudut jne kunnes numeroidut ruudut ympäröivät tyhjiöalueen kokonaan.
         if (sqPane.getAdjacentBombs() == 0) {
             game.openAdjacentSquaresIfZero(sqPane.getSquare());
             revealOpenedSquares();
@@ -153,6 +156,9 @@ public class MinesweeperUi extends Application {
 
     }
     
+    // paljastetaan kaikki avatut ruudut, eli käydään läpi jokainen SquarePane
+    // ja haetaan sen Square-olion tila (avattu vai ei). Mikäli on avattu,
+    // paljastetaan se ruutu pelaajalle.
     private void revealOpenedSquares() {
         for (int i = 0; i < (squaresX * squaresY); i++) {
             Node n = gridPane.getChildren().get(i);
@@ -166,6 +172,7 @@ public class MinesweeperUi extends Application {
         }
     }
 
+    // oikean hiiripainikkeen toiminnallisuus.
     private void rightClick(SquarePane sqPane) {
 
         // Jos ruutua on jo auki, ei tehdä mitään.
@@ -195,7 +202,7 @@ public class MinesweeperUi extends Application {
             // klikkaamalla. Muuten voisi jatkaa pelaamista pelin päätyttyään.
             squarePane.setOpen(true);
 
-            if (squarePane.getSquare().isBomb()) {
+            if (squarePane.isBomb() && !squarePane.isFlagged()) {
                 squarePane.getTile().setFill(Color.RED);
                 squarePane.showEdge(false);
             }
@@ -260,6 +267,7 @@ public class MinesweeperUi extends Application {
 //            }
 //        });
 //    }
+    
     // Luodaan pelinäkymän reunat
     public BorderPane createGameBorder() {
         BorderPane border = new BorderPane();
@@ -284,6 +292,7 @@ public class MinesweeperUi extends Application {
         return vb;
     }
     
+    // Peli hävitään. Siirrytään takaisin päävalikkoon.
     private void loseGame() {
         revealAllBombs();
         System.out.println("Hävisit.");
@@ -296,6 +305,7 @@ public class MinesweeperUi extends Application {
         timeline.play();
     }
 
+    // Peli voitetaan, siirrytään voittoruutuun.
     private void winGame() {
         System.out.println("Voitit!");
         Timeline timeline = new Timeline(new KeyFrame(
@@ -307,8 +317,8 @@ public class MinesweeperUi extends Application {
         timeline.play();
     }
 
+    // Luodaan päävalikon elementit, laitetaan ne VBoxiin.
     private VBox createMainMenuVBox() {
-        // Luodaan päävalikon elementit.
         Text title = new Text("Minesweeper");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
 
@@ -347,6 +357,7 @@ public class MinesweeperUi extends Application {
         return centerVbox;
     }
 
+    // Luodaan voittoruudun elementit, laitetaan ne VBoxiin.
     private VBox createWinScreenVBox() {
         Text title = new Text("Voitit, onneksi olkoon!");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
