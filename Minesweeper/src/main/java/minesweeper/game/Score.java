@@ -18,6 +18,15 @@ public class Score {
         this.mines = mines;
         this.time = time;
     }
+    
+    public Score(String name, int height, int width, double mines, double time) {
+        this.id = 0;
+        this.name = name;
+        this.width = width;
+        this.height = height;
+        this.mines = mines;
+        this.time = time;
+    }
 
     public int getId() {
         return id;
@@ -69,7 +78,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Nimi: " + name + ", Koko: " + width + " x " + height + 
-                ", Miinoja: " + mines + ", Aika: " + time;
+        return "Nimi: " + name + ", Koko: " + width + " x " + height + 
+                ", Miinoja: " + mines * 100 + ", Aika: " + time;
     }
 }

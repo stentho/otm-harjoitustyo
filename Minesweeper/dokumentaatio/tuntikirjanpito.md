@@ -18,4 +18,6 @@
 |       | 2    | tyhjät ruudut aukeaa oikein |
 | 27.4  | 3    | tietokantaintegraation alustava rakentaminen, ei toimi vielä |
 | 2.5   | 3    | tietokantaintegraatio toimii nyt alustavasti |
-| yht   | 42   |
+| 3.5   | 2    | koodikatselmointi |
+|       | 2    | tietokantaan lisääminen, lisää testejä |
+| yht   | 46   |

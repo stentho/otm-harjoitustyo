@@ -5,6 +5,10 @@ import java.sql.*;
 import java.util.*;
 import minesweeper.game.Score;
 
+/**
+ *  Tulostiedoille luotu rajapinta pelilogiikan ja tietokannan välille.
+ */
+
 public class ScoreDao implements Dao<Score, Integer> {
     
     private Database db;
@@ -38,19 +42,18 @@ public class ScoreDao implements Dao<Score, Integer> {
     }
 
     @Override
-    public Score saveOrUpdate(Score object) throws SQLException {
-        // ei toteutettu
-        return null;
-    }
-
-    @Override
-    public void delete(Integer key) throws SQLException {
+    public void insert(Score score) throws SQLException {
+        System.out.println("Ei toimi vielä.");
+        
         Connection conn = db.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Score WHERE id = ?");
-
-        stmt.setInt(1, key);
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Score (name, width, height, mines, time) VALUES (?, ?, ?, ?, ?)");
+        stmt.setString(1, score.getName());
+        stmt.setInt(2, score.getWidth());
+        stmt.setInt(3, score.getHeight());
+        stmt.setFloat(4, (float) score.getMines());
+        stmt.setFloat(5, (float) score.getTime());
         stmt.executeUpdate();
-
+        
         stmt.close();
         conn.close();
     }

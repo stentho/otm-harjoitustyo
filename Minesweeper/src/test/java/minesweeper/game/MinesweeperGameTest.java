@@ -17,22 +17,10 @@ public class MinesweeperGameTest {
     public MinesweeperGameTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         game = new MinesweeperGame(10, 10, 0.2);
         game.createField();
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
