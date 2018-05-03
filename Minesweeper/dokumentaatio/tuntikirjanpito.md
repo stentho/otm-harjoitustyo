@@ -16,4 +16,6 @@
 |       | 2    | sekvenssikaavio |
 | 22.4  | 3    | lisää testejä |
 |       | 2    | tyhjät ruudut aukeaa oikein |
-| yht   | 36   |
+| 27.4  | 3    | tietokantaintegraation alustava rakentaminen, ei toimi vielä |
+| 2.5   | 3    | tietokantaintegraatio toimii nyt alustavasti |
+| yht   | 42   |
