@@ -1,7 +1,11 @@
 package minesweeper.ui;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -27,6 +31,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import minesweeper.game.MinesweeperGame;
+import minesweeper.game.Score;
 import minesweeper.game.Square;
 
 public class MinesweeperUi extends Application {
@@ -37,13 +42,15 @@ public class MinesweeperUi extends Application {
     private Scene scene;
     private BorderPane mainMenu;
     private BorderPane winScreen;
+    private BorderPane scoreScreen;
     private Pane gridPane;
     private int squaresX;
     private int squaresY;
 
     // tässä luodaan ruudukko
     public Pane createGrid() {
-        System.out.println(game);
+        System.out.println("Starting game: " + game);
+        
         gridPane = new Pane();
         gridPane.setPrefSize(SQUARE_SIZE * squaresX, SQUARE_SIZE * squaresY);
 
@@ -379,6 +386,12 @@ public class MinesweeperUi extends Application {
         HBox hbN = createNameHBox(name);
 
         Button submitName = new Button("Lähetä");
+        submitName.setOnAction(e -> {
+            scoreScreen.setCenter(createScoreScreenVBox());
+            scene.setRoot(scoreScreen);
+        });
+        
+        
         Button backToMain = new Button("Takaisin päävalikkoon");
         
         backToMain.setOnAction(e -> {
@@ -399,6 +412,43 @@ public class MinesweeperUi extends Application {
 
         centerVbox.getChildren().addAll(Arrays.asList(title, score, size, mines,
                 time, hbN, submitName, backToMain));
+        return centerVbox;
+    }
+    
+    // Luodaan tulostaulukkoruudun elementit, laitetaan ne VBoxiin.
+    private VBox createScoreScreenVBox() {
+        Text title = new Text("Tulostaulukko");
+        title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
+        
+        List<Score> scores = new ArrayList<>();
+        ArrayList<Text> lines = new ArrayList<>();
+        
+        try {
+            scores = game.getAllScores();
+        } catch (Exception ex) {
+            System.out.println("Virhe: " + ex.getCause());
+        }
+        
+        System.out.println(scores);
+        
+        for (int i = 0; i < scores.size(); i++) {
+            Text s = new Text(scores.get(i).toString());
+            s.setFont(Font.font("Verdana", 18));
+            lines.add(s);
+        }
+        
+        Button backToMain = new Button("Takaisin päävalikkoon");
+        
+        backToMain.setOnAction(e -> {
+            scene.setRoot(mainMenu);
+        });
+        
+        VBox centerVbox = new VBox();
+        centerVbox.setPadding(new Insets(100));
+        
+        centerVbox.getChildren().add(title);
+        centerVbox.getChildren().addAll(lines);
+        centerVbox.getChildren().add(backToMain);
         return centerVbox;
     }
 
@@ -426,6 +476,10 @@ public class MinesweeperUi extends Application {
         winScreen = new BorderPane();
         winScreen.setPrefSize(800, 600);
         winScreen.setCenter(createWinScreenVBox());
+        
+        // Luodaan tulosruutu.
+        scoreScreen = new BorderPane();
+        scoreScreen.setPrefSize(800, 600);
 
         // Luodaan scene. Asetetaan nimeksi Minesweeper ja laitetaan se stageen.
         scene = new Scene(mainMenu);

@@ -86,7 +86,7 @@ public class MinesweeperGame {
         return field;
     }
 
-    public Square[][] placeBombs() {
+    private Square[][] placeBombs() {
         for (int y = 0; y < squaresY; y++) {
             for (int x = 0; x < squaresX; x++) {
                 Square square = new Square(x, y, Math.random() < mineFreq);
@@ -97,7 +97,7 @@ public class MinesweeperGame {
     }
 
     // lasketaan numerot ja liitetään ne kenttään (field-array)
-    public Square[][] calculateNumbersForField() {
+    private Square[][] calculateNumbersForField() {
         for (int y = 0; y < squaresY; y++) {
             for (int x = 0; x < squaresX; x++) {
                 Square square = field[x][y];

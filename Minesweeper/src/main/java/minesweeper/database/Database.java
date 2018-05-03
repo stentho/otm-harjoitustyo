@@ -38,7 +38,7 @@ public class Database {
     private List<String> initialStatements() {
         ArrayList<String> list = new ArrayList<>();
         
-        list.add("CREATE TABLE Score (id integer PRIMARY KEY, name varchar(255), integer width, integer height, float mines, float time);");
+        list.add("CREATE TABLE Score (id integer PRIMARY KEY, name varchar(255), width integer, height integer, mines float, time float);");
         list.add("INSERT INTO Score (name, width, height, mines, time) VALUES ('Thomas', 10, 10, 20, 40);");
         
         return list;
