@@ -9,13 +9,20 @@ import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -49,11 +56,11 @@ public class MinesweeperUi extends Application {
 
     @Override
     public void start(Stage st) throws Exception {
-        
+
         // Luodaan tietokanta.
         database = new Database("jdbc:sqlite:scores.db");
         database.init();
-        
+
         stage = st;
 
         // Luodaan päävalikon ruutu mainMenu.
@@ -367,24 +374,25 @@ public class MinesweeperUi extends Application {
             BorderPane gamePane = createGameBorder();
             scene.setRoot(gamePane);
         });
-        
+
         Button scoreButton = new Button();
         scoreButton.setText("Tulostaulukkoon");
         scoreButton.setOnAction(e -> {
             scene.setRoot(scoreScreen);
         });
-        
+
         Button exitButton = new Button();
         exitButton.setText("Lopeta");
         exitButton.setOnAction(e -> {
             System.exit(0);
         });
-        
+
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
         centerVbox.setSpacing(20);
 
-        centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT, playButton, scoreButton, exitButton));
+        centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT,
+                playButton, scoreButton, exitButton));
         return centerVbox;
     }
 
@@ -411,7 +419,7 @@ public class MinesweeperUi extends Application {
 
         Button submitName = new Button("Lähetä");
         submitName.setOnAction(e -> {
-            
+
             try {
                 game.insertScore(name.getText().toString(), database);
             } catch (SQLException ex) {
@@ -419,7 +427,7 @@ public class MinesweeperUi extends Application {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(MinesweeperUi.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             scoreScreen.setCenter(createScoreScreenVBox());
             scene.setRoot(scoreScreen);
         });
@@ -440,24 +448,61 @@ public class MinesweeperUi extends Application {
     }
 
     // Luodaan tulostaulukkoruudun elementit, laitetaan ne VBoxiin.
-    private VBox createScoreScreenVBox() {
+    private ScrollPane createScoreScreenVBox() {
         Text title = new Text("Tulostaulukko");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
 
+        TableView table = new TableView();
+        TableColumn name = new TableColumn("Nimi");
+        TableColumn size = new TableColumn("Koko");
+        TableColumn width = new TableColumn("Leveys");
+        TableColumn height = new TableColumn("Korkeus");
+        TableColumn mines = new TableColumn("Miinoja (%)");
+        TableColumn time = new TableColumn("Aika");
+        
+        name.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("name")
+        );
+        width.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("width")
+        );
+        height.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("height")
+        );
+        mines.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("mines")
+        );
+        time.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("time")
+        );
+        
+        size.getColumns().addAll(width, height);
+        table.getColumns().addAll(name, size, mines, time);
+
         List<Score> scores = new ArrayList<>();
         ArrayList<Text> lines = new ArrayList<>();
+        ObservableList<ScoreItem> scoresT = FXCollections.observableArrayList();
 
         try {
             scores = game.getAllScores(database);
         } catch (ClassNotFoundException | SQLException ex) {
-            
-        }
 
-        for (int i = 0; i < scores.size(); i++) {
-            Text s = new Text(scores.get(i).toString());
-            s.setFont(Font.font("Verdana", 18));
-            lines.add(s);
         }
+        
+        for (int i = 0; i < scores.size(); i++) {
+            Score s = scores.get(i);
+            ScoreItem si = new ScoreItem(
+                    s.getName(), 
+                    String.valueOf(s.getWidth()), 
+                    String.valueOf(s.getHeight()), 
+                    String.valueOf(s.getMines()), 
+                    String.valueOf(s.getTime()));
+//            Text s = new Text(scores.get(i).toString());
+//            s.setFont(Font.font("Verdana", 18));
+//            lines.add(s);
+            scoresT.add(si);
+        }
+        table.setItems(scoresT);
 
         Button backToMain = new Button("Takaisin päävalikkoon");
 
@@ -470,9 +515,12 @@ public class MinesweeperUi extends Application {
         centerVbox.setSpacing(20);
 
         centerVbox.getChildren().add(title);
-        centerVbox.getChildren().addAll(lines);
+        centerVbox.getChildren().addAll(table);
         centerVbox.getChildren().add(backToMain);
-        return centerVbox;
+
+        ScrollPane sp = new ScrollPane();
+        sp.setContent(centerVbox);
+        return sp;
     }
 
     private static HBox createNameHBox(TextField name) {
