@@ -35,7 +35,7 @@ import minesweeper.game.Square;
 
 public class MinesweeperUi extends Application {
 
-    private MinesweeperGame game;
+    private MinesweeperGame game = new MinesweeperGame(0, 0, 0);
     private Database database;
     private final static int SQUARE_SIZE = 20;
     private Stage stage;
@@ -67,10 +67,12 @@ public class MinesweeperUi extends Application {
         // Alustetaan voittoruutu.
         winScreen = new BorderPane();
         winScreen.setPrefSize(800, 600);
+        winScreen.setCenter(createWinScreenVBox());
 
         // Alustetaan tulosruutu.
         scoreScreen = new BorderPane();
         scoreScreen.setPrefSize(800, 600);
+        scoreScreen.setCenter(createScoreScreenVBox());
 
         // Luodaan scene. Asetetaan nimeksi Minesweeper ja laitetaan se stageen.
         scene = new Scene(mainMenu);
@@ -365,11 +367,24 @@ public class MinesweeperUi extends Application {
             BorderPane gamePane = createGameBorder();
             scene.setRoot(gamePane);
         });
+        
+        Button scoreButton = new Button();
+        scoreButton.setText("Tulostaulukkoon");
+        scoreButton.setOnAction(e -> {
+            scene.setRoot(scoreScreen);
+        });
+        
+        Button exitButton = new Button();
+        exitButton.setText("Lopeta");
+        exitButton.setOnAction(e -> {
+            System.exit(0);
+        });
+        
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
         centerVbox.setSpacing(20);
 
-        centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT, playButton));
+        centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT, playButton, scoreButton, exitButton));
         return centerVbox;
     }
 
