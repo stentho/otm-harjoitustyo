@@ -448,12 +448,15 @@ public class MinesweeperUi extends Application {
     }
 
     // Luodaan tulostaulukkoruudun elementit, laitetaan ne VBoxiin.
-    private ScrollPane createScoreScreenVBox() {
+    private VBox createScoreScreenVBox() {
         Text title = new Text("Tulostaulukko");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
 
         TableView table = new TableView();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
         TableColumn name = new TableColumn("Nimi");
+        name.setMinWidth(200);
         TableColumn size = new TableColumn("Koko");
         TableColumn width = new TableColumn("Leveys");
         TableColumn height = new TableColumn("Korkeus");
@@ -480,7 +483,6 @@ public class MinesweeperUi extends Application {
         table.getColumns().addAll(name, size, mines, time);
 
         List<Score> scores = new ArrayList<>();
-        ArrayList<Text> lines = new ArrayList<>();
         ObservableList<ScoreItem> scoresT = FXCollections.observableArrayList();
 
         try {
@@ -497,9 +499,6 @@ public class MinesweeperUi extends Application {
                     String.valueOf(s.getHeight()), 
                     String.valueOf(s.getMines()), 
                     String.valueOf(s.getTime()));
-//            Text s = new Text(scores.get(i).toString());
-//            s.setFont(Font.font("Verdana", 18));
-//            lines.add(s);
             scoresT.add(si);
         }
         table.setItems(scoresT);
@@ -517,10 +516,8 @@ public class MinesweeperUi extends Application {
         centerVbox.getChildren().add(title);
         centerVbox.getChildren().addAll(table);
         centerVbox.getChildren().add(backToMain);
-
-        ScrollPane sp = new ScrollPane();
-        sp.setContent(centerVbox);
-        return sp;
+        
+        return centerVbox;
     }
 
     private static HBox createNameHBox(TextField name) {
