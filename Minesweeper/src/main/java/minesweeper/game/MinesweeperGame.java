@@ -214,24 +214,17 @@ public class MinesweeperGame {
         }
         return i;
     }
-    
-    private Database initializeDatabase() throws ClassNotFoundException {
-        Database database = new Database("jdbc:sqlite:scores.db");
-        database.init();
-        return database;
-    }
 
     // haetaan tietokannasta kaikki tulokset.
-    public List<Score> getAllScores() throws ClassNotFoundException, SQLException {
-        ScoreDao scoreDao = new ScoreDao(initializeDatabase());
+    public List<Score> getAllScores(Database database) throws ClassNotFoundException, SQLException {
+        ScoreDao scoreDao = new ScoreDao(database);
         return scoreDao.findAll();
     }
     
     // laitetaan tietokantaa tulos. Ei vielä toimi.
-    public void insertScore(String name) throws SQLException, ClassNotFoundException {
-        ScoreDao scoreDao = new ScoreDao(initializeDatabase());
+    public void insertScore(String name, Database database) throws SQLException, ClassNotFoundException {
+        ScoreDao scoreDao = new ScoreDao(database);
         Score score = new Score(name, squaresX, squaresY, mineFreq * 100, 0);
-        System.out.println(score);
         scoreDao.insert(score);
     }
 }

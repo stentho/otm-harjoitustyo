@@ -28,6 +28,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import minesweeper.database.Database;
 import minesweeper.game.MinesweeperGame;
 import minesweeper.game.Score;
 import minesweeper.game.Square;
@@ -35,6 +36,7 @@ import minesweeper.game.Square;
 public class MinesweeperUi extends Application {
 
     private MinesweeperGame game;
+    private Database database;
     private final static int SQUARE_SIZE = 20;
     private Stage stage;
     private Scene scene;
@@ -47,6 +49,11 @@ public class MinesweeperUi extends Application {
 
     @Override
     public void start(Stage st) throws Exception {
+        
+        // Luodaan tietokanta.
+        database = new Database("jdbc:sqlite:scores.db");
+        database.init();
+        
         stage = st;
 
         // Luodaan päävalikon ruutu mainMenu.
@@ -57,10 +64,9 @@ public class MinesweeperUi extends Application {
         // päävalikkoruutuun.
         mainMenu.setCenter(createMainMenuVBox());
 
-        // Luodaan voittoruutu.
+        // Alustetaan voittoruutu.
         winScreen = new BorderPane();
         winScreen.setPrefSize(800, 600);
-        winScreen.setCenter(createWinScreenVBox());
 
         // Alustetaan tulosruutu.
         scoreScreen = new BorderPane();
@@ -321,6 +327,7 @@ public class MinesweeperUi extends Application {
 
     // Peli voitetaan, siirrytään voittoruutuun.
     private void winGame() {
+        winScreen.setCenter(createWinScreenVBox());
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(2000),
                 ae -> scene.setRoot(winScreen)),
@@ -360,11 +367,7 @@ public class MinesweeperUi extends Application {
         });
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
-
-        centerVbox.setMargin(title, new Insets(0, 0, 70, 0));
-        centerVbox.setMargin(hbS, new Insets(0, 0, 20, 0));
-        centerVbox.setMargin(hbM, new Insets(0, 0, 20, 0));
-        centerVbox.setMargin(hbT, new Insets(0, 0, 70, 0));
+        centerVbox.setSpacing(20);
 
         centerVbox.getChildren().addAll(Arrays.asList(title, hbS, hbM, hbT, playButton));
         return centerVbox;
@@ -375,16 +378,16 @@ public class MinesweeperUi extends Application {
         Text title = new Text("Voitit, onneksi olkoon!");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
 
-        Text score = new Text("Pisteet:");
+        Text score = new Text("Pisteet");
         score.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 
-        Text size = new Text("Kentän koko:");
+        Text size = new Text("Kentän koko: " + game.getSquaresX() + " x " + game.getSquaresY());
         size.setFont(Font.font("Verdana", 18));
 
-        Text mines = new Text("Miinoja: " + "%");
+        Text mines = new Text("Miinoja: " + game.getMineFreq() * 100 + "%");
         mines.setFont(Font.font("Verdana", 18));
 
-        Text time = new Text("Aika: ");
+        Text time = new Text("Aika: N/A");
         time.setFont(Font.font("Verdana", 18));
 
         TextField name = new TextField();
@@ -395,7 +398,7 @@ public class MinesweeperUi extends Application {
         submitName.setOnAction(e -> {
             
             try {
-                game.insertScore(name.getText().toString());
+                game.insertScore(name.getText().toString(), database);
             } catch (SQLException ex) {
                 Logger.getLogger(MinesweeperUi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -414,15 +417,7 @@ public class MinesweeperUi extends Application {
 
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
-
-        centerVbox.setMargin(title, new Insets(0, 0, 70, 0));
-        centerVbox.setMargin(score, new Insets(0, 0, 20, 0));
-        centerVbox.setMargin(size, new Insets(0, 0, 20, 0));
-        centerVbox.setMargin(mines, new Insets(0, 0, 20, 0));
-        centerVbox.setMargin(time, new Insets(0, 0, 20, 0));
-        centerVbox.setMargin(hbN, new Insets(50, 0, 0, 0));
-        centerVbox.setMargin(submitName, new Insets(20, 0, 0, 0));
-        centerVbox.setMargin(backToMain, new Insets(20, 0, 0, 0));
+        centerVbox.setSpacing(20);
 
         centerVbox.getChildren().addAll(Arrays.asList(title, score, size, mines,
                 time, hbN, submitName, backToMain));
@@ -438,12 +433,10 @@ public class MinesweeperUi extends Application {
         ArrayList<Text> lines = new ArrayList<>();
 
         try {
-            scores = game.getAllScores();
-        } catch (Exception ex) {
-            System.out.println("Virhe: " + ex.getCause());
+            scores = game.getAllScores(database);
+        } catch (ClassNotFoundException | SQLException ex) {
+            
         }
-
-        System.out.println(scores);
 
         for (int i = 0; i < scores.size(); i++) {
             Text s = new Text(scores.get(i).toString());
@@ -459,6 +452,7 @@ public class MinesweeperUi extends Application {
 
         VBox centerVbox = new VBox();
         centerVbox.setPadding(new Insets(100));
+        centerVbox.setSpacing(20);
 
         centerVbox.getChildren().add(title);
         centerVbox.getChildren().addAll(lines);

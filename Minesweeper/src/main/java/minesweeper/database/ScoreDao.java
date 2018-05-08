@@ -43,8 +43,6 @@ public class ScoreDao implements Dao<Score, Integer> {
 
     @Override
     public void insert(Score score) throws SQLException {
-        System.out.println("Ei toimi vielä.");
-        
         Connection conn = db.getConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Score (name, width, height, mines, time) VALUES (?, ?, ?, ?, ?)");
         stmt.setString(1, score.getName());
