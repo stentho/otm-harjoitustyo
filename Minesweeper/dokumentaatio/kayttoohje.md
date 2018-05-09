@@ -1,10 +1,8 @@
 # Pelin asentaminen
 
-Lataa uusin release aloitussivulta kohdasta Releaset. Voit tallettaa tiedoston mihin vain. Avaamalla tiedoston pääset suoraan peliin.  
+- Lataa pelin uusin julkaisu aloitussivulta kohdasta Releaset. Voit tallettaa tiedoston mihin vain. Avaamalla tiedoston pääset suoraan peliin.  
 
-Saadaksesi tulostaulukon toimimaan, sinun pitää ensin ladata SQLite JDBC -ajuri [tästä](https://oss.sonatype.org/content/repositories/releases/org/xerial/sqlite-jdbc/3.18.0/sqlite-jdbc-3.18.0.jar).  
-
-WINDOWS: Siirrä ajuritiedosto _C:\sqlite_-kansioon (luo kansio, mikäli sinulla ei ole sitä).  
+- Saadaksesi pelin tulostaulukon toimimaan, sinun pitää ensin ladata SQLite JDBC -ajuri [tästä](https://oss.sonatype.org/content/repositories/releases/org/xerial/sqlite-jdbc/3.18.0/sqlite-jdbc-3.18.0.jar). Siirrä ajuritiedosto samaan kansioon, minne talletit pelitiedoston.
 
 # Peliohje
 

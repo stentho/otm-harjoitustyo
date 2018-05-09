@@ -1,6 +1,7 @@
 package minesweeper.ui;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +57,6 @@ public class MinesweeperUi extends Application {
     public void start(Stage st) throws Exception {
 
         // Luodaan tietokanta.
-        
         database = new Database("jdbc:sqlite:scores.db");
         database.init();
 
@@ -363,6 +363,10 @@ public class MinesweeperUi extends Application {
         TextField sizeY = new TextField("20");
         TextField mines = new TextField("20");
         TextField time = new TextField();
+        sizeX.setMinWidth(50);
+        sizeY.setMinWidth(50);
+        mines.setMinWidth(50);
+        time.setMinWidth(50);
 
         HBox hbS = createSizeHBox(sizeX, sizeY);
         HBox hbM = createMinesHBox(mines);
@@ -470,6 +474,8 @@ public class MinesweeperUi extends Application {
         } catch (ClassNotFoundException | SQLException ex) {
 
         }
+        
+        DecimalFormat f = new DecimalFormat("0.#");
 
         for (int i = 0; i < scores.size(); i++) {
             Score s = scores.get(i);
@@ -477,8 +483,8 @@ public class MinesweeperUi extends Application {
                     s.getName(),
                     String.valueOf(s.getWidth()),
                     String.valueOf(s.getHeight()),
-                    String.valueOf(s.getMines()),
-                    String.valueOf(s.getTime()));
+                    String.valueOf(f.format(s.getMines())) + " %",
+                    String.valueOf(f.format(s.getTime())) + " s");
             scoresT.add(si);
         }
         table.setItems(scoresT);
@@ -505,11 +511,11 @@ public class MinesweeperUi extends Application {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn name = new TableColumn("Nimi");
-        name.setMinWidth(200);
+        name.setMinWidth(150);
         TableColumn size = new TableColumn("Koko");
         TableColumn width = new TableColumn("Leveys");
         TableColumn height = new TableColumn("Korkeus");
-        TableColumn mines = new TableColumn("Miinoja (%)");
+        TableColumn mines = new TableColumn("Miinoja");
         TableColumn time = new TableColumn("Aika");
 
         name.setCellValueFactory(

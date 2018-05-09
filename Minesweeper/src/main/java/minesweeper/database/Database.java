@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Database {
 
-    private String databaseAddress;
+    private final String databaseAddress;
 
     public Database(String databaseAddress) throws ClassNotFoundException {
         this.databaseAddress = databaseAddress;
@@ -44,7 +44,7 @@ public class Database {
         ArrayList<String> list = new ArrayList<>();
 
         list.add("CREATE TABLE Score (id integer PRIMARY KEY, name varchar(255), width integer, height integer, mines float, time float);");
-        list.add("INSERT INTO Score (name, width, height, mines, time) VALUES ('Thomas', 10, 10, 20, 40);");
+        list.add("INSERT INTO Score (name, width, height, mines, time) VALUES ('Esimerkki', 10, 10, 20, 40);");
 
         return list;
     }
