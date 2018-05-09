@@ -20,4 +20,5 @@
 | 2.5   | 3    | tietokantaintegraatio toimii nyt alustavasti |
 | 3.5   | 2    | koodikatselmointi |
 |       | 2    | tietokantaan lisääminen, lisää testejä |
-| yht   | 46   |
+| 8.5   | 4    | tietokanta toimii nyt hyvin, tulostaulukko, navigaatio toimii |
+| yht   | 50   |

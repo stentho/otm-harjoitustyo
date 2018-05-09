@@ -56,6 +56,7 @@ public class MinesweeperUi extends Application {
     public void start(Stage st) throws Exception {
 
         // Luodaan tietokanta.
+        
         database = new Database("jdbc:sqlite:scores.db");
         database.init();
 
@@ -288,6 +289,15 @@ public class MinesweeperUi extends Application {
         return hbT;
     }
 
+    // Luodaan nimikenttä voittoruutuun.
+    private static HBox createNameHBox(TextField name) {
+        Label labelN = new Label("Nimi:");
+        HBox hbN = new HBox();
+        hbN.getChildren().addAll(labelN, name);
+        hbN.setSpacing(10);
+        return hbN;
+    }
+
     // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +16 ja +39
     // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin.
     // Ne lasketaan stagen leveyteen ja korkeuteen.
@@ -450,35 +460,7 @@ public class MinesweeperUi extends Application {
         Text title = new Text("Tulostaulukko");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 26));
 
-        TableView table = new TableView();
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
-        TableColumn name = new TableColumn("Nimi");
-        name.setMinWidth(200);
-        TableColumn size = new TableColumn("Koko");
-        TableColumn width = new TableColumn("Leveys");
-        TableColumn height = new TableColumn("Korkeus");
-        TableColumn mines = new TableColumn("Miinoja (%)");
-        TableColumn time = new TableColumn("Aika");
-        
-        name.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("name")
-        );
-        width.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("width")
-        );
-        height.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("height")
-        );
-        mines.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("mines")
-        );
-        time.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("time")
-        );
-        
-        size.getColumns().addAll(width, height);
-        table.getColumns().addAll(name, size, mines, time);
+        TableView table = setUpScoreTable();
 
         List<Score> scores = new ArrayList<>();
         ObservableList<ScoreItem> scoresT = FXCollections.observableArrayList();
@@ -488,14 +470,14 @@ public class MinesweeperUi extends Application {
         } catch (ClassNotFoundException | SQLException ex) {
 
         }
-        
+
         for (int i = 0; i < scores.size(); i++) {
             Score s = scores.get(i);
             ScoreItem si = new ScoreItem(
-                    s.getName(), 
-                    String.valueOf(s.getWidth()), 
-                    String.valueOf(s.getHeight()), 
-                    String.valueOf(s.getMines()), 
+                    s.getName(),
+                    String.valueOf(s.getWidth()),
+                    String.valueOf(s.getHeight()),
+                    String.valueOf(s.getMines()),
                     String.valueOf(s.getTime()));
             scoresT.add(si);
         }
@@ -514,16 +496,41 @@ public class MinesweeperUi extends Application {
         centerVbox.getChildren().add(title);
         centerVbox.getChildren().addAll(table);
         centerVbox.getChildren().add(backToMain);
-        
+
         return centerVbox;
     }
 
-    private static HBox createNameHBox(TextField name) {
-        Label labelN = new Label("Nimi:");
-        HBox hbN = new HBox();
-        hbN.getChildren().addAll(labelN, name);
-        hbN.setSpacing(10);
-        return hbN;
+    private TableView setUpScoreTable() {
+        TableView table = new TableView();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn name = new TableColumn("Nimi");
+        name.setMinWidth(200);
+        TableColumn size = new TableColumn("Koko");
+        TableColumn width = new TableColumn("Leveys");
+        TableColumn height = new TableColumn("Korkeus");
+        TableColumn mines = new TableColumn("Miinoja (%)");
+        TableColumn time = new TableColumn("Aika");
+
+        name.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("name")
+        );
+        width.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("width")
+        );
+        height.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("height")
+        );
+        mines.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("mines")
+        );
+        time.setCellValueFactory(
+                new PropertyValueFactory<Score, String>("time")
+        );
+
+        size.getColumns().addAll(width, height);
+        table.getColumns().addAll(name, size, mines, time);
+        return table;
     }
 
     public static void main(String[] args) {

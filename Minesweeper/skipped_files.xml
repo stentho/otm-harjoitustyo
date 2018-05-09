@@ -7,4 +7,5 @@
 <suppressions>
     <suppress files="minesweeper.ui.MinesweeperUi.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="minesweeper.ui.SquarePane.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="minesweeper.ui.ScoreItem.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>
