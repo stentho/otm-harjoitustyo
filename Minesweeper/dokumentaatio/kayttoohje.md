@@ -24,13 +24,15 @@ Pelin tarkoitus on löytää kaikki miinat ruutukentästä. Peli on voitettu, ku
 
 ### Vasen hiirinäppäin
 
-Vasemmalla hiirinäppäimellä avaat ruutuja. Ruutuja avaamalla voi paljastua numeroita, jotka kertovat täsmälleen montako miinaa on sen ruudun ympärillä. Numeroiden perusteella voi hahmottaa, missä miinat voisivat olla. Ole kuitenkin varovainen, sillä miinaruudun avaaminen johtaa pelin häviämiseen.
+Vasemmalla hiirinäppäimellä avaat ruutuja. Ruutuja avaamalla voi paljastua numeroita, jotka kertovat täsmälleen montako miinaa on sen ruudun ympärillä. Numeroiden perusteella voi hahmottaa, missä miinat voisivat olla. Ole kuitenkin varovainen, sillä miinaruudun avaaminen johtaa pelin häviämiseen.  
+
+Pelin häviäminen:
 
 <img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/kuvat/game_lose.jpg">
 
 ### Oikea hiirinäppäin
 
-Oikealla hiiripainikkeella voit merkata ruutuja lipuilla. Tarkoitus on merkata ne ruudut, jotka ovat mielestäsi miinaruutuja. Tämä helpottaa  Tämän tekeminen ei avaa ruutua.
+Oikealla hiiripainikkeella voit merkata ruutuja punaisilla lipuilla. Tarkoitus on merkata ne ruudut, jotka ovat mielestäsi miinaruutuja. Tämä helpottaa  Tämän tekeminen ei avaa ruutua.
 
 <img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/kuvat/game_flag.jpg">
 
