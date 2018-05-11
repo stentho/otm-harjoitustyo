@@ -6,7 +6,7 @@
 java -jar minesweeperapp.jar
 ```
 
-- Saadaksesi pelin tulostaulukon toimimaan, sinun pitää ensin ladata SQLite JDBC -ajuri [tästä](https://oss.sonatype.org/content/repositories/releases/org/xerial/sqlite-jdbc/3.18.0/sqlite-jdbc-3.18.0.jar). Siirrä ajuritiedosto samaan kansioon, minne purit pelitiedostot.
+- Saadaksesi pelin tulostaulukon toimimaan, sinun pitää ensin ladata Xerialin SQLite JDBC -ajuri (versio 3.18.0) [tästä](https://oss.sonatype.org/content/repositories/releases/org/xerial/sqlite-jdbc/3.18.0/sqlite-jdbc-3.18.0.jar). Laita ajuritiedosto samaan kansioon minne purit pelitiedostot.
 
 # Peliohje
 
