@@ -143,4 +143,55 @@ public class GameTest {
             assertEquals(sqA.getY(), sqB.getY());
         }
     }
+    
+    @Test
+    public void doNotOpenSurroundingSquaresIfNotZeroAndNotBomb() {
+        // Asetetaan yksi miina ruudun alapuolelle, niin että numero ei voi olla
+        // nolla. Pidetään myös huoli, että tarkasteltava ruutu ei ole miina.
+        game.getField()[3][3] = new Square(3, 3, false);
+        game.getField()[3][4] = new Square(3, 4, true);
+        Square sq = game.getField()[3][3];
+        
+        game.openAdjacentSquaresIfZero(sq);
+        ArrayList<Square> adjSq = game.getAdjacentSquares(sq);
+        for (Square s : adjSq) {
+            assertEquals(false, s.isOpen());
+        }
+    }
+    
+    @Test
+    public void numberOfUnopenedSquaresCorrect() {
+        int squaresTotal = game.getSquaresX() * game.getSquaresY();
+        assertEquals(squaresTotal, game.numberOfUnopenedSquares());
+        
+        game.getField()[3][3].setOpen(true);
+        game.getField()[3][4].setOpen(true);
+        
+        assertEquals(squaresTotal - 2, game.numberOfUnopenedSquares());
+        
+        game.getField()[3][4].setOpen(true);
+        
+        assertEquals(squaresTotal - 2, game.numberOfUnopenedSquares());
+    }
+    
+    @Test
+    public void numberOfBombsCorrect() {
+        // Luodaan kenttä missä 100% miinoja.
+        game = new Game(10, 10, 1);
+        game.createField();
+        int bombsTotal = game.getSquaresX() * game.getSquaresY();
+        assertEquals(bombsTotal, game.numberOfBombs());
+        
+        game.getField()[3][3].setBomb(false);
+        game.getField()[3][4].setBomb(false);
+        
+        assertEquals(bombsTotal - 2, game.numberOfBombs());
+    }
+    
+    @Test
+    public void toStringCorrect() {
+        String g = game.toString();
+        
+        assertEquals(g, "Minesweeper (leveys 10, korkeus 10, miinoja 20%)");
+    }
 }

@@ -18,12 +18,6 @@ public class ScoreDao implements Dao<Score, Integer> {
     }
 
     @Override
-    public Score findOne(Integer key) throws SQLException {
-        // ei toteutettu
-        return null;
-    }
-
-    @Override
     public List<Score> findAll() throws SQLException {
         ArrayList<Score> scores;
         try (Connection conn = db.getConnection()) {

@@ -286,7 +286,7 @@ public class Game {
 
     public void startCountdown() {
         remainingTime = time;
-        remainingTimeProperty = new SimpleIntegerProperty(remainingTime);
+        remainingTimeProperty = new SimpleIntegerProperty(time);
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override

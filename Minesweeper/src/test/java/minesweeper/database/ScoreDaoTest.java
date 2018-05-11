@@ -19,6 +19,8 @@ public class ScoreDaoTest {
         Database db = new Database("jdbc:sqlite:scores.db");
         sd = new ScoreDao(db);
     }
+    
+    
 
     @Test
     public void insertsCorrectly() throws SQLException {

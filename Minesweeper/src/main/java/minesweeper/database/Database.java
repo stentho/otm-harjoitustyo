@@ -26,16 +26,12 @@ public class Database {
             Statement st = conn.createStatement();
 
             // suoritetaan komennot.
-            // tulostetaan mikä komento suoritetaan. (testausta varten)
             for (String statement : statements) {
-//                System.out.println("Running command >> " + statement);
                 st.executeUpdate(statement);
             }
 
         } catch (Throwable t) {
             // mikäli tietokantataulu on jo olemassa, komentoja ei suoriteta.
-//             tulostetaan virhe. (testausta varten)
-//            System.out.println("Error >> " + t.getMessage());
         }
     }
 

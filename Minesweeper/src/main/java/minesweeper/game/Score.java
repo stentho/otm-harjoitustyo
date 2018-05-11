@@ -79,6 +79,6 @@ public class Score {
     @Override
     public String toString() {
         return "Nimi: " + name + ", Koko: " + width + " x " + height + 
-                ", Miinoja: " + mines * 100 + ", Aika: " + time;
+                ", Miinoja: " + mines + ", Aika: " + time;
     }
 }
