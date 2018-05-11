@@ -27,4 +27,6 @@
 | 10.5  | 4    | pelilogiikka jaettu kahteen luokkaan |
 |       | 4    | aikatoiminto |
 | 11.5  | 2    | bugien korjausta |
-| yht   | 65   |
+|       | 4    | testien luomista |
+|       | 2    | dokumentaatiota |
+| yht   | 71   |
