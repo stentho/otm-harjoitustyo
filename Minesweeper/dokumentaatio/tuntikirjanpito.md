@@ -20,5 +20,10 @@
 | 2.5   | 3    | tietokantaintegraatio toimii nyt alustavasti |
 | 3.5   | 2    | koodikatselmointi |
 |       | 2    | tietokantaan lisääminen, lisää testejä |
-| 8.5   | 4    | tietokanta toimii nyt hyvin, tulostaulukko, navigaatio toimii |
-| yht   | 50   |
+| 8.5   | 3    | tietokanta toimii nyt hyvin, tulostaulukkonavigaatio toimii |
+|       | 1    | navigaatioon lisäyksiä |
+| 9.5   | 3    | tietokanta toimii nyt myös .jar-tiedoston kanssa |
+|       | 2    | taustakuva, kansiorakenne uusiksi |
+| 10.5  | 4    | pelilogiikka jaettu kahteen luokkaan |
+|       | 4    | aikatoiminto |
+| yht   | 63   |

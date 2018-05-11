@@ -332,7 +332,7 @@ public class MinesweeperUi extends Application {
     private static HBox createTimeHBox(TextField time) {
         time.setMaxWidth(40);
         Label labelT = new Label("Aikaraja:");
-        Label labelS = new Label("s");
+        Label labelS = new Label("s   -   (0 tai negatiiviset luvut = rajattomasti aikaa)");
         HBox hbT = new HBox();
         hbT.getChildren().addAll(labelT, time, labelS);
         hbT.setSpacing(10);
@@ -346,6 +346,18 @@ public class MinesweeperUi extends Application {
         hbN.getChildren().addAll(labelN, name);
         hbN.setSpacing(10);
         return hbN;
+    }
+    
+    private HBox createRemainingTimeHBox() {
+        HBox top = createHBox(new Insets(20));
+        Text time = new Text("Time: " + remainingTime);
+        Button backToMain = new Button("Anna periksi");
+        backToMain.setOnAction(e -> {
+            loseGame();
+        });
+        top.getChildren().addAll(time, backToMain);
+        top.setSpacing(50);
+        return top;
     }
 
     // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +16 ja +39
@@ -369,22 +381,11 @@ public class MinesweeperUi extends Application {
     }
 
     // Luodaan pelinäkymän ruutu.
-    private BorderPane createGameBorder(Pane p) {
+    private BorderPane createGameBorder() {
         BorderPane border = new BorderPane();
-        border.setCenter(p);
+        border.setCenter(gridPane);
         border.setBottom(createHBox(new Insets(20)));
-
-        HBox top = createHBox(new Insets(20));
-        Text time = new Text("Time: " + remainingTime);
-        Button backToMain = new Button("Anna periksi");
-        backToMain.setOnAction(e -> {
-            loseGame();
-        });
-
-        top.getChildren().addAll(time, backToMain);
-        top.setSpacing(50);
-        border.setTop(top);
-
+        border.setTop(createRemainingTimeHBox());
         border.setLeft(createVBox(new Insets(20)));
         border.setRight(createVBox(new Insets(20)));
 
@@ -392,10 +393,10 @@ public class MinesweeperUi extends Application {
     }
     
     // Tämä listener kuuntelee GameService-olion ajastinta muutosten varalta, ja 
-    // päivittää peliruudun aika-kohtaa sen mukaan. Koska java ei tue int-olion
+    // päivittää peliruutua sen mukaan. Koska java ei tue int-olion
     // muutosten kuuntelemista suoraan, tämä on tehtävä IntegerProperty-olion
-    // kautta.
-    private void addListener() {
+    // kautta. Jos listener huomaa muutoksen, piirretään peliruutu uudestaan.
+    private void addRemainingTimeListener() {
         gameService.getRemainingTimeProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -404,7 +405,7 @@ public class MinesweeperUi extends Application {
                 if (remainingTime <= 0) {
                     loseGame();
                 }
-                BorderPane gamePane = createGameBorder(gridPane);
+                BorderPane gamePane = createGameBorder();
                 scene.setRoot(gamePane);
             }
         });
@@ -418,7 +419,7 @@ public class MinesweeperUi extends Application {
         TextField sizeX = new TextField("20");
         TextField sizeY = new TextField("20");
         TextField mines = new TextField("20");
-        TextField time = new TextField("30");
+        TextField time = new TextField("0");
         sizeX.setMinWidth(50);
         sizeY.setMinWidth(50);
         mines.setMinWidth(50);
@@ -437,17 +438,20 @@ public class MinesweeperUi extends Application {
             squaresX = Integer.parseInt(sizeX.getText());
             squaresY = Integer.parseInt(sizeY.getText());
             double mF = 0.01 * Double.parseDouble(mines.getText());
-            remainingTime = Integer.parseInt(time.getText());
+            int t = Integer.parseInt(time.getText());
             
-            gameService.newGame(squaresX, squaresY, mF, remainingTime);
+            gameService.newGame(squaresX, squaresY, mF, t);
 
             resetScreenSize(SQUARE_SIZE * squaresX + 80, SQUARE_SIZE * squaresY + 80);
             gridPane = createGrid();
             
-            BorderPane gamePane = createGameBorder(gridPane);
+            BorderPane gamePane = createGameBorder();
             scene.setRoot(gamePane);
-            if (remainingTime > 0) {
-                addListener();
+            if (t > 0) {
+                remainingTime = t;
+                addRemainingTimeListener();
+            } else {
+                remainingTime = 0;
             }
         });
 

@@ -13,6 +13,7 @@ import minesweeper.database.ScoreDao;
 /**
  * Pelilogiikkaa kuvaava luokka. 
  * Tämän luokan kautta luodaan pelejä ja kirjataan/haetaan tuloksia taulukosta.
+ * Tässä luokassa käsitellään myös ajastinta.
  */
 public class GameService {
 
@@ -27,6 +28,7 @@ public class GameService {
     public GameService() {
         game = new Game(0, 0, 0, 0);
         gameState = 0;
+        timer = new Timer();
     }
 
     public Game getGame() {
@@ -89,7 +91,6 @@ public class GameService {
     public void startCountdown() {
         remainingTime = game.getTime();
         remainingTimeProperty = new SimpleIntegerProperty(remainingTime);
-        timer = new Timer();
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
