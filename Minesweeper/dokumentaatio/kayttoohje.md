@@ -40,7 +40,7 @@ Oikealla hiiripainikkeella voit merkata ruutuja punaisilla lipuilla. Tarkoitus o
 
 Jos voitat pelin, siirryt automaattisesti voittoruutuun. Tässä näet suorituksesi, ja voit halutessasi kirjata suorituksesi tulostaulukkoon kirjoittamalla nimesi tekstikenttään ja painamalla Lähetä.
 
-<img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/kuvat/game.jpg">
+<img src="https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/dokumentaatio/kuvat/game_win.jpg">
 
 ## Tulostaulukko
 
