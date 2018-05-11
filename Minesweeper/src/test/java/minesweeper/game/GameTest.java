@@ -10,40 +10,40 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class MinesweeperGameTest {
+public class GameTest {
 
-    private MinesweeperGame game;
+    private Game game;
 
-    public MinesweeperGameTest() {
+    public GameTest() {
     }
 
     @Before
     public void setUp() {
-        game = new MinesweeperGame(10, 10, 0.2);
+        game = new Game(10, 10, 0.2);
         game.createField();
     }
 
     @Test
     public void noNegativeWidthInConstructor() {
-        game = new MinesweeperGame(-8, 10, 0.2);
+        game = new Game(-8, 10, 0.2);
         assertEquals(game.getSquaresX(), 0);
     }
 
     @Test
     public void noNegativeHeightInConstructor() {
-        game = new MinesweeperGame(10, -1, 0.2);
+        game = new Game(10, -1, 0.2);
         assertEquals(game.getSquaresY(), 0);
     }
 
     @Test
     public void minesNoLessThanZeroPercent() {
-        game = new MinesweeperGame(10, 10, -1);
+        game = new Game(10, 10, -1);
         assertEquals(0.0, game.getMineFreq(), 0.001);
     }
 
     @Test
     public void minesNoMoreThanHundredPercent() {
-        game = new MinesweeperGame(10, 10, 2);
+        game = new Game(10, 10, 2);
         assertEquals(1, game.getMineFreq(), 0.001);
     }
 
