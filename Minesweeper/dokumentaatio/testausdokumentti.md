@@ -12,10 +12,6 @@ Tietokantaintegraatiota ja datan pysyvyyttä on testattu [DatabaseTest](https://
 
 Sovelluslogiikan luokalle [Square](https://github.com/stentho/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/game/Square.java) on myös tehty yksikkötestejä.
 
-### DAO-luokat
-
-Molempien DAO-luokkien toiminnallisuus on testattu luomalla testeissä tilapäinen tiedosto hyödyntäen JUnitin [TemporaryFolder](https://junit.org/junit4/javadoc/4.12/org/junit/rules/TemporaryFolder.html)-ruleja.
-
 ### Testauskattavuus
 
 Rivikattavuus on 82% ja haarautumakattavuus 79% lukuunottamatta käyttöliittymäpakkausta.
