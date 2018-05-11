@@ -2,11 +2,6 @@ package minesweeper.game;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import minesweeper.database.Database;
 import minesweeper.database.ScoreDao;
 
@@ -19,16 +14,10 @@ public class GameService {
 
     private Game game;
     private ScoreDao scoreDao;
-    private boolean gameRunning;
-    private int gameState;
-    private int remainingTime;
-    private IntegerProperty remainingTimeProperty;
-    private Timer timer;
 
     public GameService() {
         game = new Game(0, 0, 0, 0);
-        gameState = 0;
-        timer = new Timer();
+        game.setGameState(0);
     }
 
     public Game getGame() {
@@ -36,83 +25,18 @@ public class GameService {
     }
 
     public int getGameTime() {
-        return game.getTime() - remainingTime;
-    }
-
-    public int getGameState() {
-        return gameState;
-    }
-
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
-    public IntegerProperty getRemainingTimeProperty() {
-        return remainingTimeProperty;
+        return game.getTime() - game.getRemainingTime();
     }
 
     public void setGame(Game game) {
         this.game = game;
     }
 
-    public void setGameRunning(boolean gameRunning) {
-        this.gameRunning = gameRunning;
-    }
-
-    public void setGameState(int gameState) {
-        this.gameState = gameState;
-    }
-
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
-    }
-
     public void newGame(int x, int y, double mF, int time) {
         game = new Game(x, y, mF, time);
         if (time > 0) {
-            startCountdown();
+            game.startCountdown();
         }
-    }
-
-    public boolean isGameWon() {
-        return game.numberOfUnopenedSquares() == game.numberOfBombs();
-    }
-
-    public void gameEnd() {
-        timer.cancel();
-        setGameRunning(false);
-        if (isGameWon()) {
-            gameState = 1;
-        } else {
-            gameState = -1;
-        }
-    }
-
-    public void startCountdown() {
-        remainingTime = game.getTime();
-        remainingTimeProperty = new SimpleIntegerProperty(remainingTime);
-
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        remainingTime = updateTime();
-                        remainingTimeProperty.setValue(remainingTime);
-                    }
-                });
-            }
-
-        }, 1000, 1000);
-    }
-
-    private int updateTime() {
-        if (remainingTime == 1) {
-            timer.cancel();
-            gameEnd();
-        }
-        return --remainingTime;
     }
 
     // alustetaan tietokanta.
@@ -134,7 +58,15 @@ public class GameService {
                 game.getSquaresX(),
                 game.getSquaresY(),
                 game.getMineFreq() * 100,
-                game.getTime() - remainingTime);
+                game.getTime() - game.getRemainingTime());
         scoreDao.insert(score);
+    }
+
+    public boolean isGameWon() {
+        return game.isGameWon();
+    }
+
+    public void gameEnd() {
+        game.gameEnd();
     }
 }

@@ -62,11 +62,11 @@ public class MinesweeperUi extends Application {
     private Pane gridPane;
     private int squaresX;
     private int squaresY;
-    int remainingTime;
 
     @Override
     public void start(Stage st) throws Exception {
 
+        // Luodaan pelipalvelu ja liitetään tietokanta.
         gameService = new GameService();
         gameService.initializeDatabase();
 
@@ -187,6 +187,7 @@ public class MinesweeperUi extends Application {
         }
     }
 
+    // vasemman hiiripainikkeen toiminnallisuus.
     public void leftClick(SquarePane sqPane) {
 
         // Jos ruutua on jo klikattu, ei tehdä mitään.
@@ -311,8 +312,9 @@ public class MinesweeperUi extends Application {
         sizeY.setMaxWidth(40);
         Label labelS = new Label("Kentän koko:");
         Label labelX = new Label(" x ");
+        Label labelE = new Label("   -   (vain positiivisia kokonaislukuja)");
         HBox hbS = new HBox();
-        hbS.getChildren().addAll(labelS, sizeX, labelX, sizeY);
+        hbS.getChildren().addAll(labelS, sizeX, labelX, sizeY, labelE);
         hbS.setSpacing(10);
         return hbS;
     }
@@ -321,7 +323,7 @@ public class MinesweeperUi extends Application {
     private static HBox createMinesHBox(TextField mines) {
         mines.setMaxWidth(50);
         Label labelM = new Label("Miinoja:");
-        Label labelP = new Label("%");
+        Label labelP = new Label("%   -   (0-100%)");
         HBox hbM = new HBox();
         hbM.getChildren().addAll(labelM, mines, labelP);
         hbM.setSpacing(10);
@@ -332,7 +334,7 @@ public class MinesweeperUi extends Application {
     private static HBox createTimeHBox(TextField time) {
         time.setMaxWidth(40);
         Label labelT = new Label("Aikaraja:");
-        Label labelS = new Label("s   -   (0 tai negatiiviset luvut = rajattomasti aikaa)");
+        Label labelS = new Label("s   -   (nolla / negatiiviset luvut = rajattomasti aikaa)");
         HBox hbT = new HBox();
         hbT.getChildren().addAll(labelT, time, labelS);
         hbT.setSpacing(10);
@@ -348,24 +350,25 @@ public class MinesweeperUi extends Application {
         return hbN;
     }
     
-    private HBox createRemainingTimeHBox() {
+    private HBox createGameTopHBox() {
         HBox top = createHBox(new Insets(20));
-        Text time = new Text("Time: " + remainingTime);
+        Text time = new Text("Time: " + gameService.getGame().getRemainingTime());
         Button backToMain = new Button("Anna periksi");
         backToMain.setOnAction(e -> {
             loseGame();
         });
+        Text mines = new Text("Miinoja jäljellä: ");
         top.getChildren().addAll(time, backToMain);
         top.setSpacing(50);
         return top;
     }
 
     // Tässä muutetaan ikkunan kokoa kentän koon mukaan. Nuo +16 ja +39
-    // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin.
+    // viittaavat automaattisesti luoduihin reunoihin sekä yläpalkkiin (Windows).
     // Ne lasketaan stagen leveyteen ja korkeuteen.
     public void resetScreenSize(int width, int height) {
         stage.setWidth(width + 16);
-        stage.setHeight(height + 39);
+        stage.setHeight(height + 39 + 40);
     }
 
     public HBox createHBox(Insets inset) {
@@ -385,7 +388,7 @@ public class MinesweeperUi extends Application {
         BorderPane border = new BorderPane();
         border.setCenter(gridPane);
         border.setBottom(createHBox(new Insets(20)));
-        border.setTop(createRemainingTimeHBox());
+        border.setTop(createGameTopHBox());
         border.setLeft(createVBox(new Insets(20)));
         border.setRight(createVBox(new Insets(20)));
 
@@ -397,11 +400,11 @@ public class MinesweeperUi extends Application {
     // muutosten kuuntelemista suoraan, tämä on tehtävä IntegerProperty-olion
     // kautta. Jos listener huomaa muutoksen, piirretään peliruutu uudestaan.
     private void addRemainingTimeListener() {
-        gameService.getRemainingTimeProperty().addListener(new ChangeListener<Number>() {
+        gameService.getGame().getRemainingTimeProperty().addListener(new ChangeListener<Number>() {
 
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                remainingTime = (int) newValue;
+                int remainingTime = (int) newValue;
                 if (remainingTime <= 0) {
                     loseGame();
                 }
@@ -447,11 +450,11 @@ public class MinesweeperUi extends Application {
             
             BorderPane gamePane = createGameBorder();
             scene.setRoot(gamePane);
+            addRemainingTimeListener();
             if (t > 0) {
-                remainingTime = t;
-                addRemainingTimeListener();
+                gameService.getGame().setRemainingTimeProperty(t);
             } else {
-                remainingTime = 0;
+                gameService.getGame().setRemainingTimeProperty(0);
             }
         });
 
@@ -502,11 +505,9 @@ public class MinesweeperUi extends Application {
 
             try {
                 gameService.insertScore(name.getText().toString());
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(MinesweeperUi.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(MinesweeperUi.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
 
             scoreScreen.setCenter(createScoreScreenVBox());
             scene.setRoot(scoreScreen);

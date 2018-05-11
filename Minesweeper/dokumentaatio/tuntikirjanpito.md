@@ -26,4 +26,5 @@
 |       | 2    | taustakuva, kansiorakenne uusiksi |
 | 10.5  | 4    | pelilogiikka jaettu kahteen luokkaan |
 |       | 4    | aikatoiminto |
-| yht   | 63   |
+| 11.5  | 2    | bugien korjausta |
+| yht   | 65   |
