@@ -20,7 +20,7 @@ public class DatabaseTest {
 
     @Before
     public void setUp() throws ClassNotFoundException {
-        db = new Database("jdbc:sqlite:resources/test.db");
+        db = new Database("jdbc:sqlite:resources/database/test.db");
         sd = new ScoreDao(db);
     }
 
