@@ -18,6 +18,8 @@ Pelin päävalikossa voi säätää kentän kokoa, sekä miinojen määrää ja 
 
 ## Releaset
 
+[Loppupalautus] (https://github.com/stentho/otm-harjoitustyo/releases/tag/v1.0)
+
 [Viikko 5](https://github.com/stentho/otm-harjoitustyo/releases/tag/viikko5)
 
 ## Komentorivitoiminnot
