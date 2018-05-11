@@ -2,7 +2,7 @@
 
 Tällä sovelluksella pelataan Minesweeperia! Pelin tarkoitus on klikata auki ruutukentän kaikki ruudut miinaruutuja lukuunottamatta. Ruutuja klikkaamalla voi nähdä numeroja, ja niiden avulla voi päätellä, missä miinat ovat. Jos ruudussa lukee esim 5, se tarkoittaa, että sen ruudun ympärillä olevista ruuduista viidessä on miinoja. Jos klikkaa yhtäkin miinaruutua, peli on hävitty.    
 
-Pelin päävalikossa on mahdollista säätää kentän kokoa, sekä miinojen määrää. Pelissä tulee olemaan ominaisuus, missä voi kirjata oman suorituksensa tulostaulukkoon (Tätä ei ole vielä implementoitu).
+Pelin päävalikossa voi säätää kentän kokoa, sekä miinojen määrää ja aikarajaa. Pelissä voi kirjata oman suorituksensa tulostaulukkoon.
 
 ## Dokumentaatio
 
