@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * Yksittäistä peliä kuvaava luokka.
+ * Tässä luokassa käsitellään pelikentän luomista ja yleisiä pelin toimintoja.
+ * Luokassa käsitellään myös pelin ajastinta.
  */
 public class Game {
 

@@ -10,8 +10,6 @@ import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -44,7 +42,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.Timer;
 import minesweeper.game.GameService;
 import minesweeper.game.Score;
 import minesweeper.game.Square;
@@ -312,7 +309,7 @@ public class MinesweeperUi extends Application {
         sizeY.setMaxWidth(40);
         Label labelS = new Label("Kentän koko:");
         Label labelX = new Label(" x ");
-        Label labelE = new Label("   -   (vain positiivisia kokonaislukuja)");
+        Label labelE = new Label(" -   (vain positiivisia kokonaislukuja)");
         HBox hbS = new HBox();
         hbS.getChildren().addAll(labelS, sizeX, labelX, sizeY, labelE);
         hbS.setSpacing(10);
@@ -368,7 +365,7 @@ public class MinesweeperUi extends Application {
     // Ne lasketaan stagen leveyteen ja korkeuteen.
     public void resetScreenSize(int width, int height) {
         stage.setWidth(width + 16);
-        stage.setHeight(height + 39 + 40);
+        stage.setHeight(height + 39);
     }
 
     public HBox createHBox(Insets inset) {
@@ -445,7 +442,7 @@ public class MinesweeperUi extends Application {
             
             gameService.newGame(squaresX, squaresY, mF, t);
 
-            resetScreenSize(SQUARE_SIZE * squaresX + 80, SQUARE_SIZE * squaresY + 80);
+            resetScreenSize(SQUARE_SIZE * squaresX + 80, SQUARE_SIZE * squaresY + 160);
             gridPane = createGrid();
             
             BorderPane gamePane = createGameBorder();

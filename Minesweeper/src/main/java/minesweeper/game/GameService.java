@@ -7,8 +7,7 @@ import minesweeper.database.ScoreDao;
 
 /**
  * Pelilogiikkaa kuvaava luokka. 
- * Tämän luokan kautta luodaan pelejä ja kirjataan/haetaan tuloksia taulukosta.
- * Tässä luokassa käsitellään myös ajastinta.
+ * Tämän luokan kautta luodaan pelejä ja kirjataan/haetaan tuloksia.
  */
 public class GameService {
 
